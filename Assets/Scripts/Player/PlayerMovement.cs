@@ -2,15 +2,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Game.Core.Events;
-using Unity.VisualScripting;
-using Unity.Mathematics;
 
 namespace Game.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(PlayerInput))]
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private InputActionReference _moveActRef;
+        [Header("Event Channels")]
+        [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
+        [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
+
+        [Header("Input Reference")]
+        [SerializeField] private PlayerInput _playerInput;
+
+        [Header("Movement Settings")]
         [SerializeField] private float _moveForce = 7f;
         [SerializeField] private float _jumpForce = 14f;
 
@@ -20,30 +26,23 @@ namespace Game.Player.Movement
         [SerializeField] private float _checkDistance = 0.1f;
         [SerializeField] private float _checkOffset = 0.25f;
 
-        [Header("Event Channels")]
-        [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
-        [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
-
         private Rigidbody2D _rigidbody2D;
-
-        private Vector2 _input;
-        private Vector2 _velocity;
 
         private bool _isGrounded;
 
         #region Unity Methods
         private void Awake()
         {
-            if (_moveActRef == null)
+            if (_groundChecker == null)
             {
-                Debug.LogError("Move Action Reference is not assigned in the inspector.", this);
+                Debug.LogError("Ground Checker transform is not assigned. Jumping will not work correctly.", this);
                 enabled = false;
                 return;
             }
 
-            if (_groundChecker == null)
+            if (_playerInput == null)
             {
-                Debug.LogError("Ground Checker transform is not assigned. Jumping will not work correctly.", this);
+                Debug.LogError("Player Input reference is not assigned. Movement will not work correctly.", this);
                 enabled = false;
                 return;
             }
@@ -61,16 +60,6 @@ namespace Game.Player.Movement
             _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        private void OnEnable()
-        {
-            _moveActRef.action.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _moveActRef.action.Disable();
-        }
-
         private void FixedUpdate()
         {
             CheckGrounded();
@@ -78,24 +67,12 @@ namespace Game.Player.Movement
             Move();
             Jump();
         }
-
-        private void Update()
-        {
-            UpdateInput();
-        }
-        #endregion
-
-        #region Update Relative Methods
-        private void UpdateInput()
-        {
-            _input = _moveActRef.action.ReadValue<Vector2>();
-        }
         #endregion
 
         #region FixedUpdate Relative Methods
         private void Move()
         {
-            _rigidbody2D.linearVelocity = new Vector2(_input.x * _moveForce, _rigidbody2D.linearVelocityY);
+            _rigidbody2D.linearVelocity = new Vector2(_playerInput.Input.x * _moveForce, _rigidbody2D.linearVelocityY);
 
             float VelocityX = _rigidbody2D.linearVelocityX;
             _horizontalVelocityChannel?.Raise(VelocityX);
@@ -103,8 +80,10 @@ namespace Game.Player.Movement
 
         private void Jump()
         {
-            if (_isGrounded && 0 < _input.y)
+            if (_isGrounded && 0 < _playerInput.Input.y)
             {
+                // 경사로 에서 점프 시 기존 속도를 초기화하여 점프 높이를 일정하게 유지
+                _rigidbody2D.linearVelocityY = 0f; 
                 _rigidbody2D.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             }
 
