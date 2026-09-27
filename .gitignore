@@ -112,3 +112,14 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# oh-my-claudecode local tool state
+.omc/
+
+# 유료 에셋 및 개인적으로 관리되는 에셋은 버전 관리에서 제외
+# 또는 용량이 큰 에셋은 github - push에서 제외
+/[Aa]ssets/ThirdParty/
+/[Aa]ssets/Resources/
+/Docs/
+/.claude
+CLAUDE.md
