@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player.Sword
+namespace Game.Sword
 {
     public class SwordFollower : MonoBehaviour
     {

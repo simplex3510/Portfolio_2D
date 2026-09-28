@@ -1,4 +1,5 @@
 using System;
+using Game.Player.Anim;
 using UnityEngine;
 
 namespace Game.Core.Events
@@ -26,10 +27,7 @@ namespace Game.Core.Events
     {
         public event Action<float> OnRaised;
 
-        public void Raise(float value)
-        {
-            OnRaised?.Invoke(value);
-        }
+        public void Raise(float value) => OnRaised?.Invoke(value);
     }
 
     /// <summary>
@@ -40,9 +38,16 @@ namespace Game.Core.Events
     {
         public event Action<bool> OnRaised;
 
-        public void Raise(bool value)
-        {
-            OnRaised?.Invoke(value);
-        }
+        public void Raise(bool value) => OnRaised?.Invoke(value);
+    }
+
+    /// <summary>
+    /// PlayerAnimState를 전달하는 이벤트 채널(예: 플레이어 애니메이션 상태 변화).
+    /// </summary>
+    [CreateAssetMenu(menuName = "Events/Channels/Event Player Anim State Channel")]
+    public class PlayerAnimStateEventChannelSO : ScriptableObject
+    {
+        public event Action<PlayerAnimState> OnRaised;
+        public void Raise(PlayerAnimState state) => OnRaised?.Invoke(state);
     }
 }
