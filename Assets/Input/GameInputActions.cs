@@ -101,11 +101,31 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": true,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""LeftClickAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""b441131a-fa20-404a-b5ab-75ede6fa861d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""AttackModifier"",
+                    ""type"": ""Button"",
+                    ""id"": ""374b9d1f-3dfb-4559-9ede-ffcedadc1cc0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
+                    ""name"": ""WASD"",
                     ""id"": ""f92fa2be-0d70-4776-80a1-cf52ee7888c6"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
@@ -158,6 +178,28 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bf8eb0ad-ff9e-45ee-bc11-7456e53f2d13"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClickAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6eb66c91-17fe-4330-8e15-a7d86d0e5d54"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackModifier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -196,6 +238,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_LeftClickAttack = m_Player.FindAction("LeftClickAttack", throwIfNotFound: true);
+        m_Player_AttackModifier = m_Player.FindAction("AttackModifier", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -281,6 +325,8 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_LeftClickAttack;
+    private readonly InputAction m_Player_AttackModifier;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -296,6 +342,14 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Move".
         /// </summary>
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/LeftClickAttack".
+        /// </summary>
+        public InputAction @LeftClickAttack => m_Wrapper.m_Player_LeftClickAttack;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/AttackModifier".
+        /// </summary>
+        public InputAction @AttackModifier => m_Wrapper.m_Player_AttackModifier;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -325,6 +379,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @LeftClickAttack.started += instance.OnLeftClickAttack;
+            @LeftClickAttack.performed += instance.OnLeftClickAttack;
+            @LeftClickAttack.canceled += instance.OnLeftClickAttack;
+            @AttackModifier.started += instance.OnAttackModifier;
+            @AttackModifier.performed += instance.OnAttackModifier;
+            @AttackModifier.canceled += instance.OnAttackModifier;
         }
 
         /// <summary>
@@ -339,6 +399,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @LeftClickAttack.started -= instance.OnLeftClickAttack;
+            @LeftClickAttack.performed -= instance.OnLeftClickAttack;
+            @LeftClickAttack.canceled -= instance.OnLeftClickAttack;
+            @AttackModifier.started -= instance.OnAttackModifier;
+            @AttackModifier.performed -= instance.OnAttackModifier;
+            @AttackModifier.canceled -= instance.OnAttackModifier;
         }
 
         /// <summary>
@@ -482,6 +548,20 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "LeftClickAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLeftClickAttack(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AttackModifier" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAttackModifier(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

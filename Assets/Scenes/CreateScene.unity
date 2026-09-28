@@ -669,39 +669,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 17.101}
---- !u!1 &1817343427 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5199711992538040237, guid: 8648490656ea1194a9750a988257371b, type: 3}
-  m_PrefabInstance: {fileID: 3777959449771152095}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1817343430 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 327145987882390268, guid: 8648490656ea1194a9750a988257371b, type: 3}
-  m_PrefabInstance: {fileID: 3777959449771152095}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1817343431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1817343427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc8198fec46404b48aaeae72cdb157f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Sword.SwordAnimatorController
-  _playerAnimStateChannel: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
-  _mappings:
-  - state: 0
-    triggerName: IsIdled
-  - state: 1
-    triggerName: IsMoved
-  - state: 2
-    triggerName: IsJumped
-  - state: 3
-    triggerName: IsFallen
-  _animator: {fileID: 1817343430}
 --- !u!1 &2059449855
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,26 +820,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 347764069248471506, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 652471264794384525, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1211330767695284517, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1999688756721391917, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: _animStateChannel
+    - target: {fileID: 4290711049224020758, guid: 8648490656ea1194a9750a988257371b, type: 3}
+      propertyPath: _attackModifierActRef
       value: 
-      objectReference: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
-    - target: {fileID: 6125757204729641291, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.55
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5070051263351768271, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+    - target: {fileID: 4290711049224020758, guid: 8648490656ea1194a9750a988257371b, type: 3}
+      propertyPath: _LeftClickAttackActRef
+      value: 
+      objectReference: {fileID: -5953433644487806598, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
     - target: {fileID: 8843949204028884755, guid: 8648490656ea1194a9750a988257371b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -913,17 +868,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8946749007252372826, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5199711992538040237, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1817343431}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8648490656ea1194a9750a988257371b, type: 3}
 --- !u!4 &3777959449771152096 stripped
 Transform:
