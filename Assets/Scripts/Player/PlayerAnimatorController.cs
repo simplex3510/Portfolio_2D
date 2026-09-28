@@ -2,8 +2,10 @@ using UnityEngine;
 
 using Game.Core.Events;
 
-namespace Player.Animation
+namespace Game.Player.Anim
 {
+    public enum PlayerAnimState { Idle, Move, Jump, Fall }
+
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimatorController : MonoBehaviour
     {
@@ -14,11 +16,15 @@ namespace Player.Animation
         [Header("Flip Object")]
         [SerializeField] private Transform _flipRoot;
 
-        [Header("Event Channels")]
+        [Header("Send Event Channels")]
+        [SerializeField] private PlayerAnimStateEventChannelSO _animStateChannel;
+
+        [Header("Receive Event Channels")]
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
         [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
 
         private Animator _animator;
+        private PlayerAnimState _animState;
 
         private void Awake()
         {
@@ -38,6 +44,11 @@ namespace Player.Animation
             {
                 Debug.LogError("Flip Object is not assigned. Character flipping will not work correctly.", this);
             }
+
+            if (_animStateChannel == null)
+            {
+                Debug.LogError("Player Anim State Event Channel is not assigned. Animation state changes will not be broadcasted.", this);
+            }
         }
 
         private void OnEnable()
@@ -50,6 +61,21 @@ namespace Player.Animation
         {
             if (_horizontalVelocityChannel != null) _horizontalVelocityChannel.OnRaised -= SetHorizontalVelocity;
             if (_verticalVelocityChannel != null) _verticalVelocityChannel.OnRaised -= SetVerticalVelocity;
+        }
+
+        public void NotifyStateEntered(PlayerAnimState state)
+        {
+            if (_animState == state)
+            {
+                return; // 같은 상태 중복 발행 방지
+            }
+
+            _animState = state;
+
+            if (_animStateChannel != null) 
+            {
+                _animStateChannel.Raise(state);
+            }
         }
 
         private void SetHorizontalVelocity(float velocityX)
