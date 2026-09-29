@@ -15,11 +15,31 @@
                     "interactions": "",
                     "initialStateCheck": true,
                     "priority": 0
+                },
+                {
+                    "name": "LeftClickAttack",
+                    "type": "Button",
+                    "id": "b441131a-fa20-404a-b5ab-75ede6fa861d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "AttackModifier",
+                    "type": "Button",
+                    "id": "374b9d1f-3dfb-4559-9ede-ffcedadc1cc0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
+                    "name": "WASD",
                     "id": "f92fa2be-0d70-4776-80a1-cf52ee7888c6",
                     "path": "2DVector",
                     "interactions": "",
@@ -72,6 +92,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bf8eb0ad-ff9e-45ee-bc11-7456e53f2d13",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftClickAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6eb66c91-17fe-4330-8e15-a7d86d0e5d54",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AttackModifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Game.Core.Events;
+using Game.Player.Input;
 
 namespace Game.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(PlayerInput))]
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Event Channels")]
@@ -14,7 +14,7 @@ namespace Game.Player.Movement
         [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
 
         [Header("Input Reference")]
-        [SerializeField] private PlayerInput _playerInput;
+        [SerializeField] private PlayerInputReader _playerInputReader;
 
         [Header("Movement Settings")]
         [SerializeField] private float _moveForce = 7f;
@@ -40,7 +40,7 @@ namespace Game.Player.Movement
                 return;
             }
 
-            if (_playerInput == null)
+            if (_playerInputReader == null)
             {
                 Debug.LogError("Player Input reference is not assigned. Movement will not work correctly.", this);
                 enabled = false;
@@ -72,7 +72,7 @@ namespace Game.Player.Movement
         #region FixedUpdate Relative Methods
         private void Move()
         {
-            _rigidbody2D.linearVelocity = new Vector2(_playerInput.Input.x * _moveForce, _rigidbody2D.linearVelocityY);
+            _rigidbody2D.linearVelocity = new Vector2(_playerInputReader.Input.x * _moveForce, _rigidbody2D.linearVelocityY);
 
             float VelocityX = _rigidbody2D.linearVelocityX;
             _horizontalVelocityChannel?.Raise(VelocityX);
@@ -80,7 +80,7 @@ namespace Game.Player.Movement
 
         private void Jump()
         {
-            if (_isGrounded && 0 < _playerInput.Input.y)
+            if (_isGrounded && 0 < _playerInputReader.Input.y)
             {
                 // 경사로 에서 점프 시 기존 속도를 초기화하여 점프 높이를 일정하게 유지
                 _rigidbody2D.linearVelocityY = 0f; 

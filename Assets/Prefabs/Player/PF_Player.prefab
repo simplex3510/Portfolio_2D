@@ -65,7 +65,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _horizontalVelocityChannel: {fileID: 11400000, guid: 94b1cb5c691fbb84fb628ade5eb87432, type: 2}
   _verticalVelocityChannel: {fileID: 11400000, guid: 49b2fb44534fefe4cbf977d9038df2dc, type: 2}
-  _playerInput: {fileID: 4290711049224020758}
+  _playerInputReader: {fileID: 0}
   _moveForce: 7
   _jumpForce: 14
   _groundChecker: {fileID: 2065631027666860761}
@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   _moveActRef: {fileID: 4958898709052548453, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _LeftClickAttackActRef: {fileID: 0}
+  _attackModifierActRef: {fileID: 0}
 --- !u!1 &1266861954572810421
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +170,7 @@ Transform:
   m_GameObject: {fileID: 1266861954572810421}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -214,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 1315856159686013569}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 3358057825316773303}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5999999, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -449,9 +451,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Animation.PlayerAnimatorController
   _flipRoot: {fileID: 7181871711197672763}
+  _animStateChannel: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
   _horizontalVelocityChannel: {fileID: 11400000, guid: 94b1cb5c691fbb84fb628ade5eb87432, type: 2}
   _verticalVelocityChannel: {fileID: 11400000, guid: 49b2fb44534fefe4cbf977d9038df2dc, type: 2}
-  _animStateChannel: {fileID: 0}
 --- !u!1 &3850502292274355664
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +528,7 @@ GameObject:
   - component: {fileID: 7627477987233502379}
   - component: {fileID: 4158942360595516542}
   - component: {fileID: 327145987882390268}
+  - component: {fileID: 2518410893210310105}
   m_Layer: 0
   m_Name: SwordSpriteHolder
   m_TagString: Untagged
@@ -631,6 +634,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2518410893210310105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5199711992538040237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8198fec46404b48aaeae72cdb157f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Sword.SwordAnimatorController
+  _playerAnimStateChannel: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
+  _mappings:
+  - state: 0
+    triggerName: IsIdled
+  - state: 1
+    triggerName: IsMoved
+  - state: 2
+    triggerName: IsJumped
+  - state: 3
+    triggerName: IsFallen
+  _animator: {fileID: 327145987882390268}
 --- !u!1 &6004651883461919714
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +782,7 @@ Transform:
   m_GameObject: {fileID: 6702556352441230572}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
