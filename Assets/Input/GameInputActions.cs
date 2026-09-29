@@ -103,7 +103,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""priority"": 0
                 },
                 {
-                    ""name"": ""LeftClickAttack"",
+                    ""name"": ""LeftButtonAttack"",
                     ""type"": ""Button"",
                     ""id"": ""b441131a-fa20-404a-b5ab-75ede6fa861d"",
                     ""expectedControlType"": """",
@@ -186,7 +186,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftClickAttack"",
+                    ""action"": ""LeftButtonAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -238,7 +238,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_LeftClickAttack = m_Player.FindAction("LeftClickAttack", throwIfNotFound: true);
+        m_Player_LeftButtonAttack = m_Player.FindAction("LeftButtonAttack", throwIfNotFound: true);
         m_Player_AttackModifier = m_Player.FindAction("AttackModifier", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -325,7 +325,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_LeftClickAttack;
+    private readonly InputAction m_Player_LeftButtonAttack;
     private readonly InputAction m_Player_AttackModifier;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
@@ -343,9 +343,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Move => m_Wrapper.m_Player_Move;
         /// <summary>
-        /// Provides access to the underlying input action "Player/LeftClickAttack".
+        /// Provides access to the underlying input action "Player/LeftButtonAttack".
         /// </summary>
-        public InputAction @LeftClickAttack => m_Wrapper.m_Player_LeftClickAttack;
+        public InputAction @LeftButtonAttack => m_Wrapper.m_Player_LeftButtonAttack;
         /// <summary>
         /// Provides access to the underlying input action "Player/AttackModifier".
         /// </summary>
@@ -379,9 +379,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @LeftClickAttack.started += instance.OnLeftClickAttack;
-            @LeftClickAttack.performed += instance.OnLeftClickAttack;
-            @LeftClickAttack.canceled += instance.OnLeftClickAttack;
+            @LeftButtonAttack.started += instance.OnLeftButtonAttack;
+            @LeftButtonAttack.performed += instance.OnLeftButtonAttack;
+            @LeftButtonAttack.canceled += instance.OnLeftButtonAttack;
             @AttackModifier.started += instance.OnAttackModifier;
             @AttackModifier.performed += instance.OnAttackModifier;
             @AttackModifier.canceled += instance.OnAttackModifier;
@@ -399,9 +399,9 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @LeftClickAttack.started -= instance.OnLeftClickAttack;
-            @LeftClickAttack.performed -= instance.OnLeftClickAttack;
-            @LeftClickAttack.canceled -= instance.OnLeftClickAttack;
+            @LeftButtonAttack.started -= instance.OnLeftButtonAttack;
+            @LeftButtonAttack.performed -= instance.OnLeftButtonAttack;
+            @LeftButtonAttack.canceled -= instance.OnLeftButtonAttack;
             @AttackModifier.started -= instance.OnAttackModifier;
             @AttackModifier.performed -= instance.OnAttackModifier;
             @AttackModifier.canceled -= instance.OnAttackModifier;
@@ -549,12 +549,12 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMove(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "LeftClickAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LeftButtonAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLeftClickAttack(InputAction.CallbackContext context);
+        void OnLeftButtonAttack(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "AttackModifier" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

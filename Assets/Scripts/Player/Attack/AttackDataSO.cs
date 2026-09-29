@@ -10,12 +10,12 @@ namespace Game.Player.Attack
         [Header("Identity")]
         [SerializeField] private string _attackName;
 
-        [Header("Animation")]
+        [Header("Animation Parameter")]
         [Tooltip("Animator에서 이 공격을 재생하기 위한 트리거 파라미터 이름")]
         [SerializeField] private string _animationTrigger;
 
         [Header("Timing")]
-        [Tooltip("press 시점 기준, 이 시간에 도달하면 공격이 확정 발동된다. " +
+        [Tooltip("press 시점 기준, 이 시간에 도달하면 공격이 확정 발동된다.\n" + 
                  "Tap 공격은 0에 가까운 값(또는 0)을 사용한다.")]
         [SerializeField] private float _executionThreshold;
 

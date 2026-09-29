@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ab5a737cd0a3a4fa3bafe8fb98c9b7, type: 3}
+  m_Name: SO_AttackMap
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.AttackMapSO
+  _attackPair:
+  - Key:
+      _buttonType: 0
+      _pressType: 1
+      _withModifier: 0
+    Data: {fileID: 11400000, guid: a6bdc42f9978960408b4a9d44e5331f9, type: 2}

@@ -42,7 +42,7 @@ namespace Game.Core.Events
     /// <summary>
     /// PlayerAnimState를 전달하는 이벤트 채널(예: 플레이어 애니메이션 상태 변화).
     /// </summary>
-    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Event Player Anim State Channel", fileName = "New Event Player Anim State Channel")]
+    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Player Anim State Event Channel", fileName = "New Player Anim State Event Channel")]
     public class PlayerAnimStateEventChannelSO : ScriptableObject
     {
         public event Action<PlayerAnimState> OnRaised;
@@ -51,7 +51,7 @@ namespace Game.Core.Events
 
     // 플레이어 공격 상태 변화를 전파하는 이벤트 채널
     // 발행자(PlayerAttackController)는 구독자(SwordAnimatorController, VFX 등)를 직접 알지 못한다
-    [CreateAssetMenu(fileName = "PlayerAttackEventChannel", menuName = "Game/Attack/Attack Event Channel")]
+    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Player Attack Event Channel", fileName = "New Player Attack Event Channel")]
     public class PlayerAttackEventChannelSO : ScriptableObject
     {
         // 공격 확정 시점 (Tap: 즉시 / Hold: HoldDetectionThreshold 도달 시, Windup 시작)

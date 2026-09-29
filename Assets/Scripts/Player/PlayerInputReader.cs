@@ -43,19 +43,19 @@ namespace Game.Player.Input
             _attackModifierActRef.action.Enable();
 
             // Button 액션은 performed = 눌림, canceled = 뗌
-            _LeftClickAttackActRef.action.performed += HandleLeftClickAttackPerformed;
-            _LeftClickAttackActRef.action.canceled += HandleLeftClickAttackCanceled;
+            _LeftClickAttackActRef.action.performed += HandleLeftButtonAttackPressed;
+            _LeftClickAttackActRef.action.canceled += HandleLeftButtonAttackReleased;
 
-            _attackModifierActRef.action.performed += HandleAttackModifierPerformed;
+            _attackModifierActRef.action.performed += HandleAttackModifierPressed;
         }
 
         private void OnDisable()
         {
             // 구독 해제 누락 시 비활성화된 객체로 이벤트가 전달되므로 반드시 해제
-            _LeftClickAttackActRef.action.performed -= HandleLeftClickAttackPerformed;
-            _LeftClickAttackActRef.action.canceled -= HandleLeftClickAttackCanceled;
+            _LeftClickAttackActRef.action.performed -= HandleLeftButtonAttackPressed;
+            _LeftClickAttackActRef.action.canceled -= HandleLeftButtonAttackReleased;
 
-            _attackModifierActRef.action.performed -= HandleAttackModifierPerformed;
+            _attackModifierActRef.action.performed -= HandleAttackModifierPressed;
 
             _moveActRef.action.Disable();
 
@@ -77,19 +77,19 @@ namespace Game.Player.Input
         #endregion
 
         #region Attack Input Callbacks
-        private void HandleLeftClickAttackPerformed(InputAction.CallbackContext context)
+        private void HandleLeftButtonAttackPressed(InputAction.CallbackContext context)
         {
             OnLeftClickAttackPressed?.Invoke();
             Debug.Log("Left Click Attack Pressed");
         }
 
-        private void HandleLeftClickAttackCanceled(InputAction.CallbackContext context)
+        private void HandleLeftButtonAttackReleased(InputAction.CallbackContext context)
         {
             OnLeftClickAttackReleased?.Invoke();
             Debug.Log("Left Click Attack Released");
         }
 
-        private void HandleAttackModifierPerformed(InputAction.CallbackContext context)
+        private void HandleAttackModifierPressed(InputAction.CallbackContext context)
         {
             OnAttackModifierPressed?.Invoke();
             Debug.Log("Attack Modifier Pressed");

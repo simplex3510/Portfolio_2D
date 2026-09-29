@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 8843949204028884755}
   - component: {fileID: 8946749007252372826}
   - component: {fileID: 7915697415027336043}
-  - component: {fileID: 2978246645915521558}
   - component: {fileID: 4290711049224020758}
+  - component: {fileID: 2978246645915521558}
+  - component: {fileID: 3122495524175560957}
   m_Layer: 0
   m_Name: PF_Player
   m_TagString: Untagged
@@ -106,6 +107,21 @@ CapsuleCollider2D:
   m_Offset: {x: 0.032, y: 0.6}
   m_Size: {x: 0.7, y: 1.2}
   m_Direction: 0
+--- !u!114 &4290711049224020758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79970952070737897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16f877970749644d8b313ebe2dc9aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
+  _moveActRef: {fileID: 4958898709052548453, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _LeftClickAttackActRef: {fileID: -5953433644487806598, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _attackModifierActRef: {fileID: 5070051263351768271, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
 --- !u!114 &2978246645915521558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _horizontalVelocityChannel: {fileID: 11400000, guid: 94b1cb5c691fbb84fb628ade5eb87432, type: 2}
   _verticalVelocityChannel: {fileID: 11400000, guid: 49b2fb44534fefe4cbf977d9038df2dc, type: 2}
-  _playerInputReader: {fileID: 0}
+  _playerInputReader: {fileID: 4290711049224020758}
   _moveForce: 7
   _jumpForce: 14
   _groundChecker: {fileID: 2065631027666860761}
@@ -129,7 +145,7 @@ MonoBehaviour:
     m_Bits: 64
   _checkDistance: 0.1
   _checkOffset: 0.25
---- !u!114 &4290711049224020758
+--- !u!114 &3122495524175560957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,12 +154,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 79970952070737897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16f877970749644d8b313ebe2dc9aa0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dd820a73d9fb744fa00d33fb6d02a7d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
-  _moveActRef: {fileID: 4958898709052548453, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
-  _LeftClickAttackActRef: {fileID: 0}
-  _attackModifierActRef: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.PlayerAttackController
+  _inputReader: {fileID: 4290711049224020758}
+  _eventChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
+  _attackMap: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
+  _holdDetectionThreshold: 0.125
 --- !u!1 &1266861954572810421
 GameObject:
   m_ObjectHideFlags: 0

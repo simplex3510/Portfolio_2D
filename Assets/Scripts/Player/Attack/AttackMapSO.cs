@@ -6,8 +6,8 @@ namespace Game.Player.Attack
 {
     // AttackInputKey(입력 슬롯) → AttackDataSO(공격 콘텐츠) 매핑 테이블
     // 슬롯이 비어 있으면 해당 입력은 무시된다 (미정 상태를 그대로 표현)
-    [CreateAssetMenu(fileName = "New Attack Set", menuName = "Game/Attack/Attack Set")]
-    public class AttackSetSO : ScriptableObject
+    [CreateAssetMenu(menuName = "ScriptableObject/Attack/Attack Map", fileName = "New Attack Map")]
+    public class AttackMapSO : ScriptableObject
     {
         [Serializable]
         private struct AttackPair
@@ -66,7 +66,7 @@ namespace Game.Player.Attack
                     continue;
                 }
 
-                bool isHoldSlot = p.Key.PressType == AttackPressType.Hold;
+                bool isHoldSlot = p.Key.PressType == MousePressType.Hold;
                 bool hasExecutionDelay = p.Data.ExecutionThreshold > 0f;
 
                 if (isHoldSlot && !hasExecutionDelay)

@@ -4,35 +4,35 @@ using UnityEngine;
 namespace Game.Player.Attack
 {
     // 어떤 마우스 버튼을 사용했는지
-    public enum AttackButton
+    public enum MouseButtonType
     {
         Left,
         Right,
     }
 
-    // 판정 창(HoldDetectionThreshold) 결과, Tap인지 Hold인지
-    public enum AttackPressType
+    // HoldDetectionThreshold 결과, Tap인지 Hold인지
+    public enum MousePressType
     {
         Tap,
         Hold,
     }
 
-    // 공격 슬롯을 식별하는 키
+    // 공격 슬롯을 식별하는 키값
     // 어떤 공격인지는 모르며, 순수하게 입력 조합만 표현
     [Serializable]
     public struct AttackInputKey : IEquatable<AttackInputKey>
     {
-        [SerializeField] private AttackButton _button;
-        [SerializeField] private AttackPressType _pressType;
+        [SerializeField] private MouseButtonType _buttonType;
+        [SerializeField] private MousePressType _pressType;
         [SerializeField] private bool _withModifier;
 
-        public readonly AttackButton Button => _button;
-        public readonly AttackPressType PressType => _pressType;
+        public readonly MouseButtonType Button => _buttonType;
+        public readonly MousePressType PressType => _pressType;
         public readonly bool WithModifier => _withModifier;
 
-        public AttackInputKey(AttackButton button, AttackPressType pressType, bool withModifier)
+        public AttackInputKey(MouseButtonType button, MousePressType pressType, bool withModifier)
         {
-            _button = button;
+            _buttonType = button;
             _pressType = pressType;
             _withModifier = withModifier;
         }
@@ -41,7 +41,7 @@ namespace Game.Player.Attack
 #region IEquatable interface Implementation
         public bool Equals(AttackInputKey other)
         {
-            return _button == other._button
+            return _buttonType == other._buttonType
                 && _pressType == other._pressType
                 && _withModifier == other._withModifier;
         }
@@ -55,12 +55,12 @@ namespace Game.Player.Attack
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_button, _pressType, _withModifier);
+            return HashCode.Combine(_buttonType, _pressType, _withModifier);
         }
 
         public override string ToString()
         {
-            return $"{_button}_{_pressType}{(_withModifier ? "_Modifier" : string.Empty)}";
+            return $"{_buttonType}_{_pressType}{(_withModifier ? "_Modifier" : string.Empty)}";
         }
 #endregion
     }

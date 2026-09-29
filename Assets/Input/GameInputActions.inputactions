@@ -17,7 +17,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "LeftClickAttack",
+                    "name": "LeftButtonAttack",
                     "type": "Button",
                     "id": "b441131a-fa20-404a-b5ab-75ede6fa861d",
                     "expectedControlType": "",
@@ -100,7 +100,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftClickAttack",
+                    "action": "LeftButtonAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
