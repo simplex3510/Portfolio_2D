@@ -28,6 +28,14 @@ namespace Game.Core.Events
         public void Raise(float value) => OnRaised?.Invoke(value);
     }
 
+    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Int Event Channel", fileName = "New Int Event Channel")]
+    public class IntEventChannelSO : ScriptableObject
+    {
+        public event Action<int> OnRaised;
+
+        public void Raise(int value) => OnRaised?.Invoke(value);
+    }
+
     /// <summary>
     /// bool 값을 전달하는 이벤트 채널(예: 접지 상태, 이동 상태 변화).
     /// </summary>
@@ -37,16 +45,6 @@ namespace Game.Core.Events
         public event Action<bool> OnRaised;
 
         public void Raise(bool value) => OnRaised?.Invoke(value);
-    }
-
-    /// <summary>
-    /// PlayerAnimState를 전달하는 이벤트 채널(예: 플레이어 애니메이션 상태 변화).
-    /// </summary>
-    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Player Anim State Event Channel", fileName = "New Player Anim State Event Channel")]
-    public class PlayerAnimStateEventChannelSO : ScriptableObject
-    {
-        public event Action<PlayerAnimState> OnRaised;
-        public void Raise(PlayerAnimState state) => OnRaised?.Invoke(state);
     }
 
     // 플레이어 공격 상태 변화를 전파하는 이벤트 채널

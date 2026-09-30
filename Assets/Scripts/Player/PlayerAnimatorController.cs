@@ -17,7 +17,7 @@ namespace Game.Player.Anim
         [SerializeField] private Transform _flipRoot;
 
         [Header("Send Event Channels")]
-        [SerializeField] private PlayerAnimStateEventChannelSO _animStateChannel;
+        [SerializeField] private IntEventChannelSO _facingChannel;
 
         [Header("Receive Event Channels")]
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
@@ -28,6 +28,8 @@ namespace Game.Player.Anim
         private Animator _animator;
         private PlayerAnimState _animState;
 
+        private int _lastFacing = 1;
+
         private void Awake()
         {
             _animator = GetComponent<Animator>();
@@ -35,26 +37,31 @@ namespace Game.Player.Anim
             if (_horizontalVelocityChannel == null)
             {
                 Debug.LogError("Horizontal Velocity Event Channel is not assigned. Horizontal velocity will not be broadcasted.", this);
+                enabled = false;
             }
 
             if (_verticalVelocityChannel == null)
             {
                 Debug.LogError("Vertical Velocity Event Channel is not assigned. Vertical velocity will not be broadcasted.", this);
+                enabled = false;
             }
 
             if (_flipRoot == null)
             {
                 Debug.LogError("Flip Object is not assigned. Character flipping will not work correctly.", this);
-            }
-
-            if (_animStateChannel == null)
-            {
-                Debug.LogError("Player Anim State Event Channel is not assigned. Animation state changes will not be broadcasted.", this);
+                enabled = false;
             }
 
             if (_attackChannel == null)
             {
                 Debug.LogError("Player Attack Event Channel is not assigned. Attack events will not be broadcasted.", this);
+                enabled = false;
+            }
+
+            if (_facingChannel == null)
+            {
+                Debug.LogError("Facing Direction Event Channel is not assigned. Facing direction changes will not be broadcasted.", this);
+                enabled = false;
             }
         }
 
@@ -71,21 +78,6 @@ namespace Game.Player.Anim
             if (_verticalVelocityChannel != null) _verticalVelocityChannel.OnRaised -= SetVerticalVelocity;
         }
 
-        public void NotifyStateEntered(PlayerAnimState state)
-        {
-            if (_animState == state)
-            {
-                return; // 같은 상태 중복 발행 방지
-            }
-
-            _animState = state;
-
-            if (_animStateChannel != null) 
-            {
-                _animStateChannel.Raise(state);
-            }
-        }
-
         private void SetHorizontalVelocity(float velocityX)
         {
             _animator.SetFloat(HorizontalVelocityHash, velocityX);
@@ -99,15 +91,18 @@ namespace Game.Player.Anim
 
         private void FlipCharacter(float velocityX)
         {
-            // _flipOjbect의 null 검사는 Awake()에서 이미 수행되었으므로 여기서는 생략
-
-            if (velocityX < 0)
+            if (_flipRoot == null || _facingChannel == null)
             {
-                _flipRoot.localScale = new Vector3(-1, 1, 1);
+                return;
             }
-            else if (velocityX > 0)
+
+            int currentFacing = velocityX < 0f ?  -1 : 1;
+            _flipRoot.localScale = new Vector3(currentFacing, 1, 1);
+
+            if (currentFacing != _lastFacing)
             {
-                _flipRoot.localScale = new Vector3(1, 1, 1);
+                _lastFacing = currentFacing;
+                _facingChannel.Raise((int)_flipRoot.localScale.x);
             }
         }
     }

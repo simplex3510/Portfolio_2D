@@ -122,6 +122,7 @@ MonoBehaviour:
   _moveActRef: {fileID: 4958898709052548453, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
   _LeftClickAttackActRef: {fileID: -5953433644487806598, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
   _attackModifierActRef: {fileID: 5070051263351768271, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _aimActRef: {fileID: 4013937242089100552, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
 --- !u!114 &2978246645915521558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,8 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.PlayerAttackController
   _inputReader: {fileID: 4290711049224020758}
-  _eventChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
   _attackMap: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
+  _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
   _holdDetectionThreshold: 0.125
 --- !u!1 &1266861954572810421
 GameObject:
@@ -468,9 +469,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Animation.PlayerAnimatorController
   _flipRoot: {fileID: 7181871711197672763}
-  _animStateChannel: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
+  _facingChannel: {fileID: 11400000, guid: 1bb1095bc10abdd4194cb8d9160bc688, type: 2}
   _horizontalVelocityChannel: {fileID: 11400000, guid: 94b1cb5c691fbb84fb628ade5eb87432, type: 2}
   _verticalVelocityChannel: {fileID: 11400000, guid: 49b2fb44534fefe4cbf977d9038df2dc, type: 2}
+  _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
 --- !u!1 &3850502292274355664
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,17 +665,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8198fec46404b48aaeae72cdb157f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Sword.SwordAnimatorController
-  _playerAnimStateChannel: {fileID: 11400000, guid: 6446e05537026e2449248919f60e36ac, type: 2}
-  _mappings:
-  - state: 0
-    triggerName: IsIdled
-  - state: 1
-    triggerName: IsMoved
-  - state: 2
-    triggerName: IsJumped
-  - state: 3
-    triggerName: IsFallen
-  _animator: {fileID: 327145987882390268}
+  _inputReader: {fileID: 4290711049224020758}
+  _swordAnchor: {fileID: 347764069248471506}
+  _camera: {fileID: 0}
+  _maxAimAngle: 30
+  _swordAnimator: {fileID: 327145987882390268}
+  _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
+  _facingChannel: {fileID: 11400000, guid: 1bb1095bc10abdd4194cb8d9160bc688, type: 2}
+  _attackTriggerList:
+  - SlashTrigger
 --- !u!1 &6004651883461919714
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,6 +880,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8429048606711572509}
+  - component: {fileID: 3219087411449908701}
+  - component: {fileID: 9192014492211527095}
   m_Layer: 0
   m_Name: SwordVFX
   m_TagString: Untagged
@@ -902,6 +904,88 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7627477987233502379}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3219087411449908701
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502610514328513730}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!95 &9192014492211527095
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502610514328513730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8993605822189248690
 GameObject:
   m_ObjectHideFlags: 0

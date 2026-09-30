@@ -27,6 +27,9 @@ namespace Game.Sword.Anim
         [Header("Send & Receive Event Channels")]
         [SerializeField] private PlayerAttackEventChannelSO _attackChannel;
 
+        [Header("Receive Event Channels")]
+        [SerializeField] private IntEventChannelSO _facingChannel;
+
         [Header("Attack Triggers")]
         [SerializeField] private List<string> _attackTriggerList;
 
@@ -34,8 +37,6 @@ namespace Game.Sword.Anim
         private static readonly float MinAimSqrDistance = 0.0001f;
         // 1: 오른쪽, -1: 왼쪽
         private int _facing = 1;
-
-        private SwordAnimState _animState;
 
         private readonly Dictionary<string, int> _attackHashDict = new();
 
@@ -50,11 +51,13 @@ namespace Game.Sword.Anim
             if (_inputReader == null)
             {
                 Debug.LogError("Player Input Reader is not assigned in the inspector.", this);
+                enabled = false;
             }
 
             if (_swordAnchor == null)
             {
                 Debug.LogError("Sword Anchor is not assigned in the inspector.", this);
+                enabled = false;
             }
 
             if (_camera == null)
@@ -64,23 +67,29 @@ namespace Game.Sword.Anim
             }
             #endregion
 
-            // 초기 facing을 스케일에 반영
-            SetFacing(_facing);
-
             #region Animator References Validation
             if (_swordAnimator == null)
             {
                 Debug.LogError("Sword Animator is not assigned in the inspector.", this);
+                enabled = false;
             }
 
             if (_attackChannel == null)
             {
                 Debug.LogError("Attack Event Channel is not assigned in the inspector.", this);
+                enabled = false;
+            }
+
+            if (_facingChannel == null)
+            {
+                Debug.LogError("Facing Direction Event Channel is not assigned in the inspector.", this);
+                enabled = false;
             }
 
             if (_attackTriggerList == null || _attackTriggerList.Count == 0)
             {
                 Debug.LogError("No attack to trigger mappings are assigned in the inspector.", this);
+                enabled = false;
             }
             else
             {
@@ -94,20 +103,18 @@ namespace Game.Sword.Anim
 
         private void OnEnable()
         {
-            if (_attackChannel != null)
-            {
-                _attackChannel.Started += HandleAttackStarted;
-                _attackChannel.Canceled += HandleAttackCanceled;
-            }
+            _attackChannel.Started += HandleAttackStarted;
+            _attackChannel.Canceled += HandleAttackCanceled;
+
+            _facingChannel.OnRaised += SetFacing;
         }
 
         private void OnDisable()
         {
-            if (_attackChannel != null)
-            {
-                _attackChannel.Started -= HandleAttackStarted;
-                _attackChannel.Canceled -= HandleAttackCanceled;
-            }
+            _attackChannel.Started -= HandleAttackStarted;
+            _attackChannel.Canceled -= HandleAttackCanceled;
+
+            _facingChannel.OnRaised -= SetFacing;
         }
 
         private void LateUpdate()
@@ -154,22 +161,11 @@ namespace Game.Sword.Anim
         #region Sword Anim State Notifications
         public void NotifyStateEntered(SwordAnimState state)
         {
-            if (_animState == state)
-            {
-                return; // 같은 상태 중복 발행 방지
-            }
 
-            _animState = state;
         }
 
         public void NotifyStateExited(SwordAnimState state)
         {
-            if (_animState == state)
-            {
-                return; // 같은 상태 중복 발행 방지
-            }
-
-            _animState = state;
             HandleAttackEnded();
         }
         #endregion
@@ -178,7 +174,7 @@ namespace Game.Sword.Anim
         {
             if (facing == 0) return;
 
-            _facing = facing > 0 ? 1 : -1;
+            _facing = facing;
 
             // 왼쪽을 볼 때 회전각이 180도 부근이 되어 스프라이트가 뒤집혀 보이므로 Y축을 반전한다
             Vector3 scale = transform.localScale;
