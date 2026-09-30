@@ -23,6 +23,8 @@ namespace Game.Player.Anim
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
         [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
 
+        [SerializeField] private PlayerAttackEventChannelSO _attackChannel;
+
         private Animator _animator;
         private PlayerAnimState _animState;
 
@@ -49,12 +51,18 @@ namespace Game.Player.Anim
             {
                 Debug.LogError("Player Anim State Event Channel is not assigned. Animation state changes will not be broadcasted.", this);
             }
+
+            if (_attackChannel == null)
+            {
+                Debug.LogError("Player Attack Event Channel is not assigned. Attack events will not be broadcasted.", this);
+            }
         }
 
         private void OnEnable()
         {
             if (_horizontalVelocityChannel != null) _horizontalVelocityChannel.OnRaised += SetHorizontalVelocity;
             if (_verticalVelocityChannel != null) _verticalVelocityChannel.OnRaised += SetVerticalVelocity;
+;
         }
 
         private void OnDisable()

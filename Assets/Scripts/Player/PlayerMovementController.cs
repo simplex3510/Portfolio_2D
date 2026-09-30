@@ -7,7 +7,7 @@ using Game.Player.Input;
 namespace Game.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovementController : MonoBehaviour
     {
         [Header("Event Channels")]
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;

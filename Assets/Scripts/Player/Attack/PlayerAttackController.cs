@@ -18,8 +18,10 @@ namespace Game.Player.Attack
 
         [Header("References")]
         [SerializeField] private PlayerInputReader _inputReader;
-        [SerializeField] private PlayerAttackEventChannelSO _eventChannel;
         [SerializeField] private AttackMapSO _attackMap;
+
+        [Header("Send Event Channels")]
+        [SerializeField] private PlayerAttackEventChannelSO _attackChannel;
 
         [Header("Timing")]
         [Tooltip("Tap/Hold를 구분하는 InputAction 판정 길이(시간) (전역, press 기준)")]
@@ -35,7 +37,7 @@ namespace Game.Player.Attack
         private void Awake()
         {
             _inputReader = GetComponent<PlayerInputReader>();
-            if (_inputReader == null || _eventChannel == null || _attackMap == null)
+            if (_inputReader == null || _attackChannel == null || _attackMap == null)
             {
                 Debug.LogError("No required references are assigned to PlayerAttackController.", this);
                 enabled = false;
@@ -51,6 +53,8 @@ namespace Game.Player.Attack
             _inputReader.OnLeftClickAttackReleased += HandleLeftClickAttackReleased;
 
             _inputReader.OnAttackModifierPressed += HandleAttackModifierPressed;
+
+            _attackChannel.Ended += ResetToIdle;
         }
 
         private void OnDisable()
@@ -59,6 +63,8 @@ namespace Game.Player.Attack
             _inputReader.OnLeftClickAttackReleased -= HandleLeftClickAttackReleased;
 
             _inputReader.OnAttackModifierPressed -= HandleAttackModifierPressed;
+            
+            _attackChannel.Ended -= ResetToIdle;
         }
 
         private void Update()
@@ -148,7 +154,7 @@ namespace Game.Player.Attack
             }
 
             _currentAttackData = data;
-            _eventChannel.RaiseStarted(_currentAttackData);
+            _attackChannel.RaiseStarted(_currentAttackData);
             ExecuteAttack();
         }
 
@@ -165,19 +171,19 @@ namespace Game.Player.Attack
 
             _currentAttackData = data;
             _pressElapsedTime = 0f; // Windup 구간 경과 시간으로 재사용 (기준점: HoldDetectionThreshold 도달 시점)
-            _eventChannel.RaiseStarted(_currentAttackData);
+            _attackChannel.RaiseStarted(_currentAttackData);
             _state = AttackInputState.Windup;
         }
 
         private void ExecuteAttack()
         {
-            _eventChannel.RaiseExecuted(_currentAttackData);
+            _attackChannel.RaiseExecuted(_currentAttackData);
             _state = AttackInputState.Executing;
         }
 
         private void CancelAttack()
         {
-            _eventChannel.RaiseCanceled(_currentAttackData);
+            _attackChannel.RaiseCanceled(_currentAttackData);
             ResetToIdle();
         }
 
@@ -187,19 +193,5 @@ namespace Game.Player.Attack
             _state = AttackInputState.Idle;
         }
         #endregion
-
-        // 애니메이션(또는 다른 외부 시스템)이 공격 종료를 알릴 때 호출한다
-        // 예: SwordAnimatorController가 애니메이션 이벤트로 이 메서드를 호출
-        public void NotifyAttackEnded()
-        {
-            if (_state != AttackInputState.Executing)
-            {
-                return;
-            }
-
-            var finishedData = _currentAttackData;
-            ResetToIdle();
-            _eventChannel.RaiseEnded(finishedData);
-        }
     }
 }

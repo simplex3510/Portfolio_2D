@@ -15,6 +15,6 @@ MonoBehaviour:
   _attackPair:
   - Key:
       _buttonType: 0
-      _pressType: 1
+      _pressType: 0
       _withModifier: 0
     Data: {fileID: 11400000, guid: a6bdc42f9978960408b4a9d44e5331f9, type: 2}

@@ -14,7 +14,15 @@ namespace Game.Player.Input
         [SerializeField] private InputActionReference _LeftClickAttackActRef;
         [SerializeField] private InputActionReference _attackModifierActRef;
 
+        [Header("Aim Input Settings")]
+        [SerializeField] private InputActionReference _aimActRef;
+
         public Vector2 Input { get; private set; } = Vector2.zero;
+
+        // 마우스 스크린 좌표(픽셀)
+        // 월드 좌표 변환은 카메라가 필요하므로 입력 계층에서는 하지 않고,
+        // 소비자(조준 회전 컴포넌트)가 담당한다
+        public Vector2 AimScreenPosition { get; private set; } = Vector2.zero;
 
         // 조합키가 현재 눌려 있는지 여부
         // 판정 계층이 AttackLC press 시점에 읽어 LC / LC+Shift를 구분하는 용도
@@ -27,7 +35,7 @@ namespace Game.Player.Input
 
         private void Awake()
         {
-            if (_moveActRef == null || _LeftClickAttackActRef == null || _attackModifierActRef == null)
+            if (_moveActRef == null || _LeftClickAttackActRef == null || _attackModifierActRef == null || _aimActRef == null)
             {
                 Debug.LogError("Input Action Reference is not assigned in the inspector.", this);
                 enabled = false;
@@ -38,6 +46,7 @@ namespace Game.Player.Input
         private void OnEnable()
         {
             _moveActRef.action.Enable();
+            _aimActRef.action.Enable();
 
             _LeftClickAttackActRef.action.Enable();
             _attackModifierActRef.action.Enable();
@@ -58,6 +67,7 @@ namespace Game.Player.Input
             _attackModifierActRef.action.performed -= HandleAttackModifierPressed;
 
             _moveActRef.action.Disable();
+            _aimActRef.action.Disable();
 
             _LeftClickAttackActRef.action.Disable();
             _attackModifierActRef.action.Disable();
@@ -67,12 +77,18 @@ namespace Game.Player.Input
         {
             // 폴링
             UpdateMoveInput();
+            UpdateAimInput();
         }
 
         #region Update Relative Methods
         private void UpdateMoveInput()
         {
             Input = _moveActRef.action.ReadValue<Vector2>();
+        }
+
+        private void UpdateAimInput()
+        {
+            AimScreenPosition = _aimActRef.action.ReadValue<Vector2>();
         }
         #endregion
 

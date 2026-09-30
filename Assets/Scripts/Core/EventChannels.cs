@@ -61,14 +61,14 @@ namespace Game.Core.Events
         public event Action<AttackDataSO> Executed;
 
         // 공격 정상 종료
-        public event Action<AttackDataSO> Ended;
+        public event Action Ended;
 
         // Hold 공격이 Windup 중 release되어 취소됨
         public event Action<AttackDataSO> Canceled;
 
         public void RaiseStarted(AttackDataSO data) => Started?.Invoke(data);
         public void RaiseExecuted(AttackDataSO data) => Executed?.Invoke(data);
-        public void RaiseEnded(AttackDataSO data) => Ended?.Invoke(data);
         public void RaiseCanceled(AttackDataSO data) => Canceled?.Invoke(data);
+        public void RaiseEnded() => Ended?.Invoke();
     }
 }
