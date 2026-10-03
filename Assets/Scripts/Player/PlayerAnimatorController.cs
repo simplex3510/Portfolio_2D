@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Game.Core.Events;
+using Unity.Mathematics;
 
 namespace Game.Player.Anim
 {
@@ -96,11 +97,29 @@ namespace Game.Player.Anim
                 return;
             }
 
-            int currentFacing = velocityX < 0f ?  -1 : 1;
-            _flipRoot.localScale = new Vector3(currentFacing, 1, 1);
-
-            if (currentFacing != _lastFacing)
+            int currentFacing = 0;
+            if (0.01f < velocityX)
             {
+                currentFacing = 1;
+            }
+            else if (velocityX < -0.01f)
+            {
+                currentFacing = -1;
+            }
+            else
+            {
+                // 현재 이동 속도가 0에 가까우면 캐릭터의 방향을 변경하지 않는다.
+                return;
+            }
+
+            if (currentFacing == _lastFacing)
+            {
+                // 현재 방향과 마지막 방향이 동일하면 캐릭터의 방향을 변경하지 않는다.
+                return;
+            }
+            else
+            {
+                _flipRoot.localScale = new Vector3(currentFacing, 1, 1);
                 _lastFacing = currentFacing;
                 _facingChannel.Raise((int)_flipRoot.localScale.x);
             }

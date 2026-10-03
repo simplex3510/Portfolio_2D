@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Game.Core.Events;
 using Game.Player.Attack;
-using Game.Player.Input;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Game.Sword.Anim
@@ -10,17 +10,6 @@ namespace Game.Sword.Anim
 
     public class SwordAnimatorController : MonoBehaviour
     {
-        [Header("Aim References")]
-        [SerializeField] private PlayerInputReader _inputReader;
-        // 각도 계산의 원점. Damping이 적용된 검 위치가 아니라 플레이어 앵커를 사용한다
-        [SerializeField] private Transform _swordAnchor;
-        // 비어 있으면 Camera.main 사용
-        [SerializeField] private Camera _camera;
-
-        [Header("Aim Settings")]
-        // facing 수평축을 0도로 두고 위/아래로 허용하는 최대 각도
-        [SerializeField, Range(0f, 180f)] private float _maxAimAngle = 90f;
-
         [Header("Animator References")]
         [SerializeField] private Animator _swordAnimator;
 
@@ -33,8 +22,6 @@ namespace Game.Sword.Anim
         [Header("Attack Triggers")]
         [SerializeField] private List<string> _attackTriggerList;
 
-        // 마우스가 앵커와 거의 겹치면 방향이 불안정하므로 회전을 갱신하지 않는 최소 거리(제곱)
-        private static readonly float MinAimSqrDistance = 0.0001f;
         // 1: 오른쪽, -1: 왼쪽
         private int _facing = 1;
 
@@ -47,26 +34,6 @@ namespace Game.Sword.Anim
         #region Unity Methods
         public void Awake()
         {
-            #region Aim References Validation
-            if (_inputReader == null)
-            {
-                Debug.LogError("Player Input Reader is not assigned in the inspector.", this);
-                enabled = false;
-            }
-
-            if (_swordAnchor == null)
-            {
-                Debug.LogError("Sword Anchor is not assigned in the inspector.", this);
-                enabled = false;
-            }
-
-            if (_camera == null)
-            {
-                Debug.LogWarning("Camera is not assigned in the inspector.\nUsing Camera.main.", this);
-                _camera = Camera.main;
-            }
-            #endregion
-
             #region Animator References Validation
             if (_swordAnimator == null)
             {
@@ -116,11 +83,6 @@ namespace Game.Sword.Anim
 
             _facingChannel.OnRaised -= SetFacing;
         }
-
-        private void LateUpdate()
-        {
-            UpdateAimRotation();
-        }
         #endregion
 
         private int SetAttackTrigger(string attackTrigger)
@@ -138,6 +100,13 @@ namespace Game.Sword.Anim
         #region Attack Event Handlers
         private void HandleAttackStarted(AttackDataSO data)
         {
+            // 재생 중에 들어온 입력은 무시한다.
+            // 소비되지 못한 공격 트리거가 남아 있다가, 종료 직후 공격이 한 번 더 재생되는 것을 막는다
+            if (_isAttacking)
+            {
+                return;
+            }
+
             _isAttacking = true;
             _currentAttackHash = SetAttackTrigger(data.AnimationTrigger);
 
@@ -147,12 +116,19 @@ namespace Game.Sword.Anim
 
         private void HandleAttackCanceled(AttackDataSO data)
         {
-            _isAttacking = false;
-            _swordAnimator.ResetTrigger(_currentAttackHash);
+            // 현재는 slash만 존재하므로 버튼 release(탭)는 무시하고 애니메이션을 끝까지 재생한다.
+            // hold형 공격(smash/thrust/spin)의 release 처리와 실제 캔슬은 해당 시점에 결정한다
         }
 
         private void HandleAttackEnded()
         {
+            if (!_isAttacking)
+            {
+                return;
+            }
+
+            // 종료 전환은 Animator의 Exit Time 전이가 담당하므로 여기서 트리거를 세팅하지 않는다.
+            // (소비할 전이가 없는 트리거가 남아 다음 공격이 즉시 종료되는 것을 방지)
             _isAttacking = false;
             _attackChannel.RaiseEnded();
         }
@@ -161,52 +137,30 @@ namespace Game.Sword.Anim
         #region Sword Anim State Notifications
         public void NotifyStateEntered(SwordAnimState state)
         {
-
+            
         }
 
         public void NotifyStateExited(SwordAnimState state)
         {
+            Debug.Log($"SwordAnimState exited: {state}", this);
+
+            if (state != SwordAnimState.Other)
+            {
+                return;
+            }
+            
             HandleAttackEnded();
         }
         #endregion
 
         public void SetFacing(int facing)
         {
-            if (facing == 0) return;
-
-            _facing = facing;
-
-            // 왼쪽을 볼 때 회전각이 180도 부근이 되어 스프라이트가 뒤집혀 보이므로 Y축을 반전한다
-            Vector3 scale = transform.localScale;
-            scale.y = Mathf.Abs(scale.y) * _facing;
-            transform.localScale = scale;
-        }
-
-        private void UpdateAimRotation()
-        {
-            Vector2 aimWorldPosition = ScreenToWorld(_inputReader.AimScreenPosition);
-            Vector2 aimDirection = aimWorldPosition - (Vector2)_swordAnchor.position;
-
-            // 마우스 방향이 너무 가까우면 회전을 무시한다
-            if (aimDirection.sqrMagnitude < MinAimSqrDistance)
+            if (facing != 1 && facing != -1)
             {
                 return;
             }
 
-            // facing이 왼쪽이면 x를 뒤집어 "오른쪽 기준"으로 통일한 상대 각도를 구한다
-            float relativeAngle = Mathf.Atan2(aimDirection.y, aimDirection.x * _facing) * Mathf.Rad2Deg;
-            relativeAngle = Mathf.Clamp(relativeAngle, -_maxAimAngle, _maxAimAngle);
-
-            // 상대 각도를 월드 각도로 환원: 왼쪽 facing은 180도를 기준으로 좌우 대칭
-            float worldAngle = _facing > 0 ? relativeAngle : 180f - relativeAngle;
-            transform.rotation = Quaternion.Euler(0f, 0f, worldAngle);
-        }
-
-        private Vector2 ScreenToWorld(Vector2 screenPosition)
-        {
-            // z는 카메라로부터의 거리. 원근 카메라여도 z=0 평면에 맞도록 카메라 z를 사용한다
-            Vector3 screenPoint = new Vector3(screenPosition.x, screenPosition.y, -_camera.transform.position.z);
-            return _camera.ScreenToWorldPoint(screenPoint);
+            transform.localScale = new Vector3(facing * Mathf.Abs(transform.localScale.x) * facing, transform.localScale.y, transform.localScale.z);
         }
     }
 }

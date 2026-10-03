@@ -1,81 +1,78 @@
 using System;
 using System.Collections.Generic;
+
 using UnityEngine;
+
+using Game.Input.Attack;
 
 namespace Game.Player.Attack
 {
-    // AttackInputKey(입력 슬롯) → AttackDataSO(공격 콘텐츠) 매핑 테이블
-    // 슬롯이 비어 있으면 해당 입력은 무시된다 (미정 상태를 그대로 표현)
-    [CreateAssetMenu(menuName = "ScriptableObject/Attack/Attack Map", fileName = "New Attack Map")]
+
+    /// <summary>
+    /// 입력(AttackInput)에 공격(AttackDataSO)을 대응시키는 할당표.
+    /// 인스펙터에서 슬롯마다 입력 값과 공격 SO를 지정하고, 런타임에는 입력 값으로 공격을 조회한다.
+    /// 어느 시점에 공격을 확정할지는 슬롯에 어떤 입력(Gesture, Action)을 지정하느냐로 정해진다.
+    /// 무기가 Sword 하나뿐이므로 프로젝트 전체에서 하나만 사용한다.
+    /// </summary>
+    [CreateAssetMenu(fileName = "AttackMap", menuName = "ScriptableObject/Attack/Attack Map")]
     public class AttackMapSO : ScriptableObject
     {
+        /// <summary>입력 값 하나와 그에 할당된 공격의 쌍</summary>
         [Serializable]
-        private struct AttackPair
+        public struct Slot
         {
-            public AttackInputKey Key;
-            public AttackDataSO Data;
+            [SerializeField] private AttackInput _input;
+            [SerializeField] private AttackDataSO _attack;
+
+            public readonly AttackInput Input { get { return _input; } }
+            public readonly AttackDataSO Attack { get { return _attack; } }
         }
 
-        [SerializeField] private AttackPair[] _attackPair;
+        [SerializeField] private List<Slot> _slotList = new();
 
-        private Dictionary<AttackInputKey, AttackDataSO> _attackDict;
+        // 조회용 캐시. AttackInput이 IEquatable을 구현하므로 키 비교와 조회에서 박싱 할당이 없다.
+        private Dictionary<AttackInput, AttackDataSO> _attackMap;
 
-        // 컨트롤러가 시작 시 호출하여 조회용 캐시를 준비한다
-        public void InitializeAttackDictionary()
+        /// <summary>입력 값에 할당된 공격을 찾는다. 할당이 없으면 false.</summary>
+        public bool TryGetAttackData(AttackInput input, out AttackDataSO attack)
         {
-            _attackDict = new Dictionary<AttackInputKey, AttackDataSO>(_attackPair.Length);
-
-            foreach (var p in _attackPair)
+            if (_attackMap == null)
             {
-                if (p.Data == null)
+                attack = null;
+                return false;
+            }
+
+            return _attackMap.TryGetValue(input, out attack);
+        }
+
+        private void BuildAttackMap()
+        {
+            _attackMap = new Dictionary<AttackInput, AttackDataSO>();
+
+            for (int i = 0; i < _slotList.Count; i++)
+            {
+                Slot slot = _slotList[i];
+
+                // 공격이 비어 있는 슬롯은 무시한다
+                if (slot.Attack == null)
+                    continue;
+
+                // 같은 입력이 중복 등록되면 먼저 등록된 슬롯을 사용한다
+                if (_attackMap.ContainsKey(slot.Input))
                 {
+                    Debug.LogWarning($"AttackMapSO: 중복된 입력 '{slot.Input}' 슬롯입니다. 먼저 등록된 슬롯을 사용합니다.", this);
                     continue;
                 }
 
-                if (_attackDict.TryAdd(p.Key, p.Data) != true)
-                {
-                    Debug.LogWarning($"[{name}] there are duplicate AttackInputKey: {p.Key}", this);
-                }
+                _attackMap.Add(slot.Input, slot.Attack);
             }
-        }
-
-        // 슬롯에 대응하는 공격 데이터를 조회한다. 없으면 null (해당 입력 무시)
-        public AttackDataSO GetAttackData(AttackInputKey key)
-        {
-            if (_attackDict == null)
-            {
-                InitializeAttackDictionary();
-            }
-
-            _attackDict.TryGetValue(key, out var data);
-            return data;
         }
 
 #if UNITY_EDITOR
+        // 인스펙터에서 슬롯을 수정하면 캐시를 다시 만든다 (중복 경고를 편집 즉시 확인할 수 있다)
         private void OnValidate()
         {
-            if (_attackPair == null)
-            {
-                return;
-            }
-
-            foreach (var p in _attackPair)
-            {
-                if (p.Data == null)
-                {
-                    continue;
-                }
-
-                bool isHoldSlot = p.Key.PressType == MousePressType.Hold;
-                bool hasExecutionDelay = p.Data.ExecutionThreshold > 0f;
-
-                if (isHoldSlot && !hasExecutionDelay)
-                {
-                    Debug.LogWarning(
-                        $"[{name}] Hold slot({p.Key}) has ExecutionThreshold of 0: {p.Data.name}",
-                        this);
-                }
-            }
+            BuildAttackMap();
         }
 #endif
     }

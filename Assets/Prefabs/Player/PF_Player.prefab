@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 8946749007252372826}
   - component: {fileID: 7915697415027336043}
   - component: {fileID: 4290711049224020758}
-  - component: {fileID: 2978246645915521558}
+  - component: {fileID: 7904256530387076341}
   - component: {fileID: 3122495524175560957}
+  - component: {fileID: 2978246645915521558}
   m_Layer: 0
   m_Name: PF_Player
   m_TagString: Untagged
@@ -120,9 +121,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   _moveActRef: {fileID: 4958898709052548453, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
-  _LeftClickAttackActRef: {fileID: -5953433644487806598, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _leftClickAttackActRef: {fileID: -5953433644487806598, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+  _rightClickAttackActRef: {fileID: -3620756522533910542, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
   _attackModifierActRef: {fileID: 5070051263351768271, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
-  _aimActRef: {fileID: 4013937242089100552, guid: d4a9caf2f2d398c4abf9d4dda507cce9, type: 3}
+--- !u!114 &7904256530387076341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79970952070737897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cca452fbd46034d87b82ea81216245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Input.Attack.PlayerAttackInputReader
+  _inputReader: {fileID: 0}
+  _attackMap: {fileID: 0}
+  _holdDetectionThreshold: 0.25
+--- !u!114 &3122495524175560957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79970952070737897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd820a73d9fb744fa00d33fb6d02a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.PlayerAttackController
+  _attackMap: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
+  _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
 --- !u!114 &2978246645915521558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,22 +176,6 @@ MonoBehaviour:
     m_Bits: 64
   _checkDistance: 0.1
   _checkOffset: 0.25
---- !u!114 &3122495524175560957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79970952070737897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dd820a73d9fb744fa00d33fb6d02a7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.PlayerAttackController
-  _inputReader: {fileID: 4290711049224020758}
-  _attackMap: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
-  _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
-  _holdDetectionThreshold: 0.125
 --- !u!1 &1266861954572810421
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 1315856159686013569}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -665,10 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8198fec46404b48aaeae72cdb157f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Sword.SwordAnimatorController
-  _inputReader: {fileID: 4290711049224020758}
-  _swordAnchor: {fileID: 347764069248471506}
-  _camera: {fileID: 0}
-  _maxAimAngle: 30
   _swordAnimator: {fileID: 327145987882390268}
   _attackChannel: {fileID: 11400000, guid: b9f010e1a56474f4d84a27b7b62dba07, type: 2}
   _facingChannel: {fileID: 11400000, guid: 1bb1095bc10abdd4194cb8d9160bc688, type: 2}
@@ -951,14 +961,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 9, y: 9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0

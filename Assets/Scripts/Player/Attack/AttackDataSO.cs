@@ -14,9 +14,10 @@ namespace Game.Player.Attack
         [Tooltip("Animator에서 이 공격을 재생하기 위한 트리거 파라미터 이름")]
         [SerializeField] private string _animationTrigger;
 
-        [Header("Timing")]
-        [Tooltip("press 시점 기준, 이 시간에 도달하면 공격이 확정 발동된다.\n" + 
-                 "Tap 공격은 0에 가까운 값(또는 0)을 사용한다.")]
+        [Header("Timing (Only for Hold)")]
+        [Tooltip("입력이 확정되어 공격이 요청된 시점(AttackInputCompleted 수신)부터, 이 시간이 지나면 공격이 발동한다.\n" +
+                 "이 시간이 지나기 전에 입력이 취소(AttackInputCanceled)되면 공격은 취소된다.\n" +
+                 "0이면 확정 즉시 발동한다. (Tap 공격은 0을 사용한다)")]
         [SerializeField] private float _executionThreshold;
 
         public string AttackName => _attackName;

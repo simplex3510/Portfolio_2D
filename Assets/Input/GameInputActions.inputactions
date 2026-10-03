@@ -17,7 +17,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "LeftButtonAttack",
+                    "name": "LeftButton",
                     "type": "Button",
                     "id": "b441131a-fa20-404a-b5ab-75ede6fa861d",
                     "expectedControlType": "",
@@ -27,9 +27,9 @@
                     "priority": 0
                 },
                 {
-                    "name": "AttackModifier",
+                    "name": "RightButton",
                     "type": "Button",
-                    "id": "374b9d1f-3dfb-4559-9ede-ffcedadc1cc0",
+                    "id": "61d5d963-308b-4002-9a46-cf58735e106e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -37,13 +37,13 @@
                     "priority": 0
                 },
                 {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "4458c218-89dc-4528-833e-b88b18a82fbc",
-                    "expectedControlType": "Vector2",
+                    "name": "Modifier",
+                    "type": "Button",
+                    "id": "374b9d1f-3dfb-4559-9ede-ffcedadc1cc0",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true,
+                    "initialStateCheck": false,
                     "priority": 0
                 }
             ],
@@ -110,7 +110,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftButtonAttack",
+                    "action": "LeftButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -121,18 +121,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "AttackModifier",
+                    "action": "Modifier",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "0fd0d683-a4e5-4b0b-bd6e-bf38facf8657",
-                    "path": "<Mouse>/position",
+                    "id": "7e76801b-16bd-4f46-ae7d-2e75e8a9d627",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
+                    "action": "RightButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
