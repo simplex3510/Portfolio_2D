@@ -821,6 +821,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7904256530387076341, guid: 8648490656ea1194a9750a988257371b, type: 3}
+      propertyPath: _holdConfirmedThreshold
+      value: 0.125
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904256530387076341, guid: 8648490656ea1194a9750a988257371b, type: 3}
       propertyPath: _holdDetectionThreshold
       value: 0.125
       objectReference: {fileID: 0}

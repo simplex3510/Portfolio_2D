@@ -21,18 +21,19 @@ namespace Game.Input.Attack
     public struct AttackInput : IEquatable<AttackInput>
     {
         [SerializeField] private MouseInputButton _button;
+
         [SerializeField] private MouseInputGesture _gesture;
-        [SerializeField] private MouseInputPhase _phase;
 
         // 버튼을 누르는 순간 Shift가 눌려 있었는지 (press 시점에 한 번만 샘플링)
         [SerializeField] private MouseInputModifier _shiftModifier;
 
-        // [SerializeField] private AttackInputState _state;
+        private MouseInputPhase _phase;
+
 
         public MouseInputButton Button { get { return _button; } }
         public MouseInputGesture Gesture { get {return _gesture; } }
-        public MouseInputPhase Phase { get {return _phase; } }
         public MouseInputModifier ShiftModifier { get { return _shiftModifier; } }
+        public MouseInputPhase Phase { get {return _phase; } }
         // public AttackInputState State { get { return _state; } }
         
         public AttackInput(

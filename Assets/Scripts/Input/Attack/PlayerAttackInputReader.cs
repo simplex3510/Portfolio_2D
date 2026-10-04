@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 
 using Game.Player.Attack;
-using System.Collections.Generic;
 
 namespace Game.Input.Attack
 {
@@ -22,51 +21,18 @@ namespace Game.Input.Attack
     {
         private struct JudgementContext
         {
-            public bool PressSignaled { get; private set; }
-            public bool ReleaseSignaled { get; private set; }
-            public bool IsTracking { get; private set; }
-            public float PressTime { get; private set; }
-            public float ReleaseTime { get; private set; }
+            // 판정이 확정되기 전까지는 계속 tracking 상태를 유지.
+            // 판정은 JudgeAttackInput()에서 이루어지며, 판정이 확정되면 tracking 상태를 종료한다.
+            public bool IsTracking { get; set; }
+            public float PressTime { get; set; }
+            public float ReleaseTime { get; set; }
 
             public void Reset()
             {
-                PressSignaled = false;
-                ReleaseSignaled = false;
                 PressTime = 0f;
                 ReleaseTime = 0f;
                 IsTracking = false;
             }
-
-            public void SetPressSignal(float time)
-            {
-                PressSignaled = true;
-                PressTime = time;
-            }
-
-            public void SetReleaseSignal(float time)
-            {
-                ReleaseSignaled = true;
-                ReleaseTime = time;
-            }
-
-            public void ConsumePressSignal()
-            {
-                if (PressSignaled)
-                {
-                    PressSignaled = false;
-                    IsTracking = true;
-                }
-            }
-
-            public void ConsumeReleaseSignal()
-            {
-                if (ReleaseSignaled)
-                {
-                    ReleaseSignaled = false;
-                    IsTracking = false;
-                }
-            }
-
         }
 
         /// <summary>입력(AttackInput) → 공격(AttackDataSO) 할당표</summary>
@@ -75,7 +41,7 @@ namespace Game.Input.Attack
         // Tap/Hold를 구분하는 시간(초, unscaledTime 기준, press 기준). 모든 입력에 공통으로 적용된다.
         [Tooltip("press 후 이 시간 동안 유지하면 Hold, 그 전에 떼면 Tap으로 판정한다.")]
         [Min(0f)]
-        [SerializeField] private float _holdDetectionThreshold = 0.25f;
+        [SerializeField] private float _holdConfirmedThreshold = 0.25f;
 
         /// <summary>
         /// 입력이 확정되어 해당 공격이 요청되었을 때 발행된다.
@@ -87,10 +53,10 @@ namespace Game.Input.Attack
         /// 누르는 동안 확정되어 유지되던 공격의 입력이 끝났을 때 발행된다.
         /// (버튼을 뗐거나, 같은 press에서 다른 입력으로 전환된 경우)
         /// 뗄 때 확정되는 입력(Released)은 확정 즉시 끝난 것이므로 발행하지 않는다.
-        /// 이 이벤트는 "입력이 끝났다"는 사실만 알린다. 예: Hold 공격을 뗄 때 발동할지 취소할지는
-        /// 이 이벤트를 받은 PlayerAttackController가 ExecutionThreshold로 판단한다.
+        /// 이 이벤트는 "입력이 끝났다"는 사실만 알린다.
+        /// 예: Hold 공격을 뗄 때 발동할지 취소할지는 이 이벤트를 받은 PlayerAttackController가 ExecutionThreshold로 판단한다.
         /// </summary>
-        public event Action<AttackDataSO> AttackInputCanceled;
+        public event Action<AttackDataSO> AttackInputExpired;
 
         /// <summary>Raw Input을 제공하는 PlayerInputReader. RequireComponent로 같은 오브젝트에서 가져온다.</summary>
         private PlayerInputReader _inputReader;
@@ -119,7 +85,7 @@ namespace Game.Input.Attack
             _inputReader.MouseButtonPressed += HandleMouseButtonPressed;
             _inputReader.MouseButtonReleased += HandleMouseButtonReleased;
 
-            ResetJudgementContext();
+            ResetContext();
         }
 
         private void OnDisable()
@@ -130,7 +96,7 @@ namespace Game.Input.Attack
             _inputReader.MouseButtonReleased -= HandleMouseButtonReleased;
             
             // 비활성화 중에는 판정 상태를 남기지 않는다 (유지 중이던 공격은 취소 이벤트 없이 버린다)
-            ResetJudgementContext();
+            ResetContext();
         }
 
         private void Update()
@@ -144,13 +110,6 @@ namespace Game.Input.Attack
             // 이미 입력을 tracking 중일 때,
             if (_judgementContext.IsTracking == true)
             {
-                // 확정된 입력이 있을 경우
-                if (_attackData != null)
-                {
-                    // 기존의 입력을 취소한다.
-                    RaiseCanceled(_attackData);
-                }
-
                 // 새로운 입력은 무시한다.
                 return;
             }
@@ -163,11 +122,17 @@ namespace Game.Input.Attack
                 shiftModifier: _inputReader.IsShiftHeld ? MouseInputModifier.Shift : MouseInputModifier.None
             );
 
-            _judgementContext.SetPressSignal(Time.unscaledTime);
+            _judgementContext.IsTracking = true;
+            _judgementContext.PressTime = Time.unscaledTime;
         }
 
         private void HandleMouseButtonReleased(MouseInputButton button)
         {
+            if (_judgementContext.IsTracking != true || _attackInput.Button != button)
+            {
+                return;
+            }
+
             _attackInput = new AttackInput(
                 /* 변경된 입력 */
                 button: button,
@@ -178,119 +143,119 @@ namespace Game.Input.Attack
                 shiftModifier: _attackInput.ShiftModifier
             );
 
-            _judgementContext.SetReleaseSignal(Time.unscaledTime);
+            _judgementContext.ReleaseTime = Time.unscaledTime;
         }
 
         // ---------- 판정 ----------
 
         private void TickTracking()
         {
-            if (_judgementContext.PressSignaled)
-            {
-                _judgementContext.ConsumePressSignal();
-                BeginTracking();
-            }
-
-            // release를 Hold 시간 검사보다 먼저 처리한다.
-            // 같은 프레임에 Hold 시간 도달과 release가 겹치면 Tap으로 판정된다(Tap 우대).
-            if (_judgementContext.ReleaseSignaled)
-            {
-                _judgementContext.ConsumeReleaseSignal();
-                EndTracking();
-
-                ResetJudgementContext();
-            }
-
             if (_judgementContext.IsTracking == true)
             {
-                CheckGesture();
+                JudgeGesture();
             }
 
-        }
-
-        private void BeginTracking()
-        {
-            // press 즉시의 입력. 아직 Tap/Hold를 알 수 없으므로 제스처는 None이다.
-            _attackInput = new AttackInput(
-                /* 변경된 입력 */
-                gesture: MouseInputGesture.None,
-                phase: MouseInputPhase.Pressed,
-
-                /* 유지된 입력 */
-                button: _attackInput.Button,
-                shiftModifier: _attackInput.ShiftModifier
-            );
         }
 
         // 최종적으로 gesture가 확정되는 시점.
-        private void EndTracking()
-        {
-            // (None, Released): 같은 프레임에 press와 release가 겹치면 Tap으로 판정된다(Tap 우대).
-            MouseInputGesture gesture = MouseInputGesture.Hold != _attackInput.Gesture ? MouseInputGesture.Tap : MouseInputGesture.Hold;
-
-            _attackInput = new AttackInput(
-                /* 변경된 입력 */
-                gesture: gesture,
-                phase: MouseInputPhase.Released,
-
-                /* 유지된 입력 */
-                button: _attackInput.Button,
-                shiftModifier: _attackInput.ShiftModifier
-            );
-
-            bool isAttackFound = _attackMap.TryGetAttackData(_attackInput, out _attackData);
-            if (isAttackFound == true)
-            {
-                RaiseConfirmed(_attackData);
-            }
-        }
-
         // 입력 시간에 따라서 Tap -> Hold로 변하도록 AttackInput을 갱신한다.
-        private void CheckGesture()
+        private void JudgeGesture()
         {
-            // 이미 Hold로 확정되었으면 더 검사하지 않는다
-            if (_attackInput.Gesture == MouseInputGesture.Hold) return;
-
-            if (Time.unscaledTime - _judgementContext.PressTime < _holdDetectionThreshold)
+            if (_attackInput.Phase == MouseInputPhase.Pressed)
             {
-                // Hold 시간 전: Tap 후보. 확정은 release 때 한다.
-                _attackInput = new AttackInput(
-                    /* 변경된 입력 */
-                    gesture: MouseInputGesture.Tap,
+                // 이미 Hold로 판정된 입력은 더 이상 갱신하지 않는다.
+                if (_attackInput.Gesture == MouseInputGesture.Hold) return;
 
-                    /* 유지된 입력 */
-                    button: _attackInput.Button,
-                    phase: _attackInput.Phase,
-                    shiftModifier: _attackInput.ShiftModifier
-                );
+                if (Time.unscaledTime - _judgementContext.PressTime >= _holdConfirmedThreshold)
+                {
+                    _attackInput = new AttackInput(
+                        /* 변경된 입력 */
+                        gesture: MouseInputGesture.Hold,
+
+                        /* 유지된 입력 */
+                        button: _attackInput.Button,
+                        phase: _attackInput.Phase,
+                        shiftModifier: _attackInput.ShiftModifier
+                    );
+
+                    // (Hold, Pressed) 발행 - Hold가 Press 되었으므로 Confirmed 이벤트 발행.
+                    _attackMap.TryGetAttackData(_attackInput, out _attackData);
+                    if (_attackData != null)
+                    {
+                        RaiseConfirmed(_attackData);
+                    }
+                }
+                // else: 아직 Hold 시간에 도달하지 않았으므로, (None, Pressed) 상태를 유지한다.
             }
-            else
+            else if (_attackInput.Phase == MouseInputPhase.Released)
             {
-                CheckHolding();
+                if (_judgementContext.ReleaseTime - _judgementContext.PressTime < _holdConfirmedThreshold)
+                {
+                    _attackInput = new AttackInput(
+                        /* 변경된 입력 */
+                        gesture: MouseInputGesture.Tap,
+
+                        /* 유지된 입력 */
+                        button: _attackInput.Button,
+                        phase: _attackInput.Phase,
+                        shiftModifier: _attackInput.ShiftModifier
+                    );
+
+                    // (Tap, Pressed)는 발행될 수 없음.
+                    // (Tap, Released) 발행 - Tap이 Release 되었으므로 Confirmed 이벤트 발행.
+                    _attackMap.TryGetAttackData(_attackInput, out _attackData);
+                    if (_attackData != null)
+                    {
+                        RaiseConfirmed(_attackData);
+                    }
+                }
+                // else: Hold로 판정되었으므로, (Hold, Released) Expired 이벤트 발행 
+                else
+                {
+                    // 논리적으로 Hold로 판정되었으나 아직 Hold로 갱신되지 않은 상태일 경우                    
+                    if (_attackInput.Gesture != MouseInputGesture.Hold)
+                    {
+                        _attackInput = new AttackInput(
+                            /* 변경된 입력 */
+                            gesture: MouseInputGesture.Hold,
+                            phase: MouseInputPhase.Pressed,
+
+                            /* 유지된 입력 */
+                            button: _attackInput.Button,
+                            shiftModifier: _attackInput.ShiftModifier
+                        );
+
+                        // Hold가 확정된 (None, Pressed) 발행
+                        // Confirmed 이벤트를 발행하지 못했으므로, Confirmed 이벤트를 먼저 발행한다.
+                        _attackMap.TryGetAttackData(_attackInput, out _attackData);
+                        if (_attackData != null)
+                        {
+                            RaiseConfirmed(_attackData);
+                        }
+                    }
+
+                    _attackInput = new AttackInput(
+                        /* 변경된 입력 */
+                        gesture: MouseInputGesture.Hold,
+                        phase: MouseInputPhase.Released,
+
+                        /* 유지된 입력 */
+                        button: _attackInput.Button,
+                        shiftModifier: _attackInput.ShiftModifier
+                    );
+
+                    // (Hold, Released) 발행 - Hold가 Release 되었으므로 Expired 이벤트 발행.
+                    _attackMap.TryGetAttackData(_attackInput, out _attackData);
+                    if (_attackData != null)
+                    {
+                        RaiseExpired(_attackData);
+                    }
+                }
+
+                // tracking을 종료하고, 판정 context를 초기화한다.
+                ResetContext();
             }
         }
-
-        // 누른 채 Hold 시간에 도달한 순간의 입력을 확정한다.
-        private void CheckHolding()
-        {
-            _attackInput = new AttackInput(
-                /* 변경된 입력 */
-                gesture: MouseInputGesture.Hold,
-
-                /* 유지된 입력 */
-                button: _attackInput.Button,
-                phase: _attackInput.Phase,
-                shiftModifier: _attackInput.ShiftModifier
-            );
-
-            bool isAttackFound = _attackMap.TryGetAttackData(_attackInput, out _attackData);
-            if (isAttackFound == true)
-            {
-                RaiseConfirmed(_attackData);
-            }
-        }
-
-        // ---------- 보조 ----------
 
         private void RaiseConfirmed(AttackDataSO attackData)
         {
@@ -303,21 +268,19 @@ namespace Game.Input.Attack
             LogAttackEvent("Confirmed", attackData);
         }
 
-        // Canceled가 발생하는 경우
-        // (1) 기존의 입력이 있을 때, 다른 입력으로 인해 기존의 입력이 취소되는 경우
-        private void RaiseCanceled(AttackDataSO attackData)
+        private void RaiseExpired(AttackDataSO attackData)
         {
             if (attackData == null)
             {
-                Debug.LogError("AttackInputReader: Canceled attackData is null. This should not happen.", this);
+                Debug.LogError("AttackInputReader: Expired attackData is null. This should not happen.", this);
                 return;
             }
 
-            AttackInputCanceled?.Invoke(attackData);
-            LogAttackEvent("Canceled", attackData);
+            AttackInputExpired?.Invoke(attackData);
+            LogAttackEvent("Expired", attackData);
         }
 
-        private void ResetJudgementContext()
+        private void ResetContext()
         {
             _judgementContext.Reset();
             _attackInput.Reset();
