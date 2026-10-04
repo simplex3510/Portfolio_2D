@@ -822,7 +822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7904256530387076341, guid: 8648490656ea1194a9750a988257371b, type: 3}
       propertyPath: _holdDetectionThreshold
-      value: 0.1
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 8843949204028884755, guid: 8648490656ea1194a9750a988257371b, type: 3}
       propertyPath: m_LocalPosition.x
