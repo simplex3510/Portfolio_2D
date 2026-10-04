@@ -136,8 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81cca452fbd46034d87b82ea81216245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Input.Attack.PlayerAttackInputReader
-  _inputReader: {fileID: 0}
-  _attackMap: {fileID: 0}
+  _attackMap: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
   _holdDetectionThreshold: 0.25
 --- !u!114 &3122495524175560957
 MonoBehaviour:

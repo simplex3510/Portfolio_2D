@@ -821,13 +821,9 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 7904256530387076341, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: _attackMap
-      value: 
-      objectReference: {fileID: 11400000, guid: 288dcc5e92a0b7847b5207bff8e4b09f, type: 2}
-    - target: {fileID: 7904256530387076341, guid: 8648490656ea1194a9750a988257371b, type: 3}
-      propertyPath: _inputReader
-      value: 
-      objectReference: {fileID: 3777959449771152099}
+      propertyPath: _holdDetectionThreshold
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8843949204028884755, guid: 8648490656ea1194a9750a988257371b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -878,17 +874,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8843949204028884755, guid: 8648490656ea1194a9750a988257371b, type: 3}
   m_PrefabInstance: {fileID: 3777959449771152095}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3777959449771152099 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4290711049224020758, guid: 8648490656ea1194a9750a988257371b, type: 3}
-  m_PrefabInstance: {fileID: 3777959449771152095}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16f877970749644d8b313ebe2dc9aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

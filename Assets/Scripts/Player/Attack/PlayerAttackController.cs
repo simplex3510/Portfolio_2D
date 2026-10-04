@@ -8,34 +8,30 @@ namespace Game.Player.Attack
     [RequireComponent(typeof(PlayerAttackInputReader))]
     public class PlayerAttackController : MonoBehaviour
     {
-        // 공격 진행 단계 (입력 신호와는 별개)
-        private enum AttackPhase
-        {
-            Idle,       // 대기
-            Pending,    // 보류, Tap-Hold 판정 진행 중 (press ~ HoldDetectionThreshold)
-            Windup,     // Hold 확정 + 선 딜레이 재생 중 (Hold 확정 ~ ExecutionThreshold)
-            Executing,  // 공격 발동 (Executed ~ Ended)
-        }
+        // [Header("References")]
 
-        [Header("References")]
-        [SerializeField] private AttackMapSO _attackMap;
+        private PlayerAttackInputReader _attackInputReader;
 
-        [Header("Send Event Channels")]
-        [SerializeField] private PlayerAttackEventChannelSO _attackChannel;
+        private Animator _animator;
 
         private void Awake()
         {
-
+            _attackInputReader = GetComponent<PlayerAttackInputReader>();
         }
 
         private void OnEnable()
         {
-
+            _attackInputReader.AttackInputConfirmed += HandleAttackInputConfirmed;
         }
 
         private void OnDisable()
         {
+            _attackInputReader.AttackInputConfirmed -= HandleAttackInputConfirmed;
+        }
 
+        private void HandleAttackInputConfirmed(AttackDataSO attackData)
+        {
+            
         }
     }
 }

@@ -59,25 +59,28 @@ namespace Game.Input.Attack
             // _state = AttackInputState.None;
         }
 
+        // 같은 입력인지 비교하는 요소는 총 3가지다.
+        // 1. 어떤 버튼을 눌렀는가 (Left, Right)
+        // 2. 어떤 제스처를 취했는가 (Tap, Hold)
+        // 3. Shift를 누른 상태에서 입력했는가 (Shift, None)
         public readonly bool Equals(AttackInput other)
         {
             return _button == other._button
                 && _gesture == other._gesture
-                && _phase == other._phase
                 && _shiftModifier == other._shiftModifier;
         }
 
         public override readonly int GetHashCode()
         {
-            return HashCode.Combine(_button, _gesture, _phase, _shiftModifier);
+            return HashCode.Combine(_button, _gesture, _shiftModifier);
         }
 
         /// <summary>표시용 이름 (예: "LC Hold Pressed + Shift"). 에디터/로그 용도라 매번 문자열을 생성한다.</summary>
         public override readonly string ToString()
         {
-            string buttonLabel = _button == MouseInputButton.LeftButton ? "LC" : "RC";
-            string shiftLabel = _shiftModifier == MouseInputModifier.Shift ? " + Shift" : string.Empty;
-            return $"{buttonLabel} {_gesture} {_phase}{shiftLabel}";
+            string button = _button == MouseInputButton.LeftButton ? "LC" : _button == MouseInputButton.RightButton ? "RC" : "None";
+            string shift = _shiftModifier == MouseInputModifier.Shift ? "Shift" : "None";
+            return $"{button} {_gesture} {shift}";
         }
     }
 }

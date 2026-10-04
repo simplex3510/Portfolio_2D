@@ -20,62 +20,38 @@ MonoBehaviour:
       _shiftModifier: 0
     _attack: {fileID: 11400000, guid: a6bdc42f9978960408b4a9d44e5331f9, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
+      _button: 1
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: cd4f813b61deed0498c34c680c0659a0, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
+      _button: 1
+      _gesture: 2
+      _phase: 2
       _shiftModifier: 0
-    _attack: {fileID: 0}
+    _attack: {fileID: 11400000, guid: ce4c902fc2d35c14fa7dc19af849223f, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
+      _button: 1
+      _gesture: 2
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: 6cb365c036d1c1c47a275b8f018f2085, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
+      _button: 2
+      _gesture: 1
+      _phase: 2
       _shiftModifier: 0
-    _attack: {fileID: 0}
+    _attack: {fileID: 11400000, guid: ca703d466f618204b85318bb3c0b3ae9, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
+      _button: 2
+      _gesture: 2
+      _phase: 2
       _shiftModifier: 0
-    _attack: {fileID: 0}
+    _attack: {fileID: 11400000, guid: cfa887101e6fba6438d0c2be6e87ef2c, type: 2}
   - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
-  - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
-  - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
-  - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
-  - _input:
-      _button: 0
-      _gesture: 0
-      _phase: 0
-      _shiftModifier: 0
-    _attack: {fileID: 0}
+      _button: 2
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: 635373461b6e60f4ebb6adbc4ee023c7, type: 2}
