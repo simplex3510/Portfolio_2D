@@ -17,7 +17,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "LeftClickAttack",
+                    "name": "LeftButton",
                     "type": "Button",
                     "id": "b441131a-fa20-404a-b5ab-75ede6fa861d",
                     "expectedControlType": "",
@@ -27,7 +27,17 @@
                     "priority": 0
                 },
                 {
-                    "name": "AttackModifier",
+                    "name": "RightButton",
+                    "type": "Button",
+                    "id": "61d5d963-308b-4002-9a46-cf58735e106e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Modifier",
                     "type": "Button",
                     "id": "374b9d1f-3dfb-4559-9ede-ffcedadc1cc0",
                     "expectedControlType": "",
@@ -100,7 +110,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftClickAttack",
+                    "action": "LeftButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -111,7 +121,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "AttackModifier",
+                    "action": "Modifier",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e76801b-16bd-4f46-ae7d-2e75e8a9d627",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

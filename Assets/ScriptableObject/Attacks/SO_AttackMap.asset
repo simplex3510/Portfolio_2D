@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00ab5a737cd0a3a4fa3bafe8fb98c9b7, type: 3}
+  m_Name: SO_AttackMap
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Player.Attack.AttackMapSO
+  _slotList:
+  - _input:
+      _button: 1
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 0
+    _attack: {fileID: 11400000, guid: a6bdc42f9978960408b4a9d44e5331f9, type: 2}
+  - _input:
+      _button: 1
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: cd4f813b61deed0498c34c680c0659a0, type: 2}
+  - _input:
+      _button: 1
+      _gesture: 2
+      _phase: 2
+      _shiftModifier: 0
+    _attack: {fileID: 11400000, guid: ce4c902fc2d35c14fa7dc19af849223f, type: 2}
+  - _input:
+      _button: 1
+      _gesture: 2
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: 6cb365c036d1c1c47a275b8f018f2085, type: 2}
+  - _input:
+      _button: 2
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 0
+    _attack: {fileID: 11400000, guid: ca703d466f618204b85318bb3c0b3ae9, type: 2}
+  - _input:
+      _button: 2
+      _gesture: 2
+      _phase: 2
+      _shiftModifier: 0
+    _attack: {fileID: 11400000, guid: cfa887101e6fba6438d0c2be6e87ef2c, type: 2}
+  - _input:
+      _button: 2
+      _gesture: 1
+      _phase: 2
+      _shiftModifier: 1
+    _attack: {fileID: 11400000, guid: 635373461b6e60f4ebb6adbc4ee023c7, type: 2}

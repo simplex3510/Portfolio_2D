@@ -2,12 +2,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 using Game.Core.Events;
-using Game.Player.Input;
+using Game.Input;
 
 namespace Game.Player.Movement
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovementController : MonoBehaviour
     {
         [Header("Event Channels")]
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
@@ -72,7 +72,7 @@ namespace Game.Player.Movement
         #region FixedUpdate Relative Methods
         private void Move()
         {
-            _rigidbody2D.linearVelocity = new Vector2(_playerInputReader.Input.x * _moveForce, _rigidbody2D.linearVelocityY);
+            _rigidbody2D.linearVelocity = new Vector2(_playerInputReader.MovementInput.x * _moveForce, _rigidbody2D.linearVelocityY);
 
             float VelocityX = _rigidbody2D.linearVelocityX;
             _horizontalVelocityChannel?.Raise(VelocityX);
@@ -80,7 +80,7 @@ namespace Game.Player.Movement
 
         private void Jump()
         {
-            if (_isGrounded && 0 < _playerInputReader.Input.y)
+            if (_isGrounded && 0 < _playerInputReader.MovementInput.y)
             {
                 // 경사로 에서 점프 시 기존 속도를 초기화하여 점프 높이를 일정하게 유지
                 _rigidbody2D.linearVelocityY = 0f; 

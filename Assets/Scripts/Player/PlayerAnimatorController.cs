@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Game.Core.Events;
+using Unity.Mathematics;
 
 namespace Game.Player.Anim
 {
@@ -17,14 +18,18 @@ namespace Game.Player.Anim
         [SerializeField] private Transform _flipRoot;
 
         [Header("Send Event Channels")]
-        [SerializeField] private PlayerAnimStateEventChannelSO _animStateChannel;
+        [SerializeField] private IntEventChannelSO _facingChannel;
 
         [Header("Receive Event Channels")]
         [SerializeField] private FloatEventChannelSO _horizontalVelocityChannel;
         [SerializeField] private FloatEventChannelSO _verticalVelocityChannel;
 
+        [SerializeField] private PlayerAttackEventChannelSO _attackChannel;
+
         private Animator _animator;
         private PlayerAnimState _animState;
+
+        private int _lastFacing = 1;
 
         private void Awake()
         {
@@ -33,21 +38,31 @@ namespace Game.Player.Anim
             if (_horizontalVelocityChannel == null)
             {
                 Debug.LogError("Horizontal Velocity Event Channel is not assigned. Horizontal velocity will not be broadcasted.", this);
+                enabled = false;
             }
 
             if (_verticalVelocityChannel == null)
             {
                 Debug.LogError("Vertical Velocity Event Channel is not assigned. Vertical velocity will not be broadcasted.", this);
+                enabled = false;
             }
 
             if (_flipRoot == null)
             {
                 Debug.LogError("Flip Object is not assigned. Character flipping will not work correctly.", this);
+                enabled = false;
             }
 
-            if (_animStateChannel == null)
+            if (_attackChannel == null)
             {
-                Debug.LogError("Player Anim State Event Channel is not assigned. Animation state changes will not be broadcasted.", this);
+                Debug.LogError("Player Attack Event Channel is not assigned. Attack events will not be broadcasted.", this);
+                enabled = false;
+            }
+
+            if (_facingChannel == null)
+            {
+                Debug.LogError("Facing Direction Event Channel is not assigned. Facing direction changes will not be broadcasted.", this);
+                enabled = false;
             }
         }
 
@@ -55,27 +70,13 @@ namespace Game.Player.Anim
         {
             if (_horizontalVelocityChannel != null) _horizontalVelocityChannel.OnRaised += SetHorizontalVelocity;
             if (_verticalVelocityChannel != null) _verticalVelocityChannel.OnRaised += SetVerticalVelocity;
+;
         }
 
         private void OnDisable()
         {
             if (_horizontalVelocityChannel != null) _horizontalVelocityChannel.OnRaised -= SetHorizontalVelocity;
             if (_verticalVelocityChannel != null) _verticalVelocityChannel.OnRaised -= SetVerticalVelocity;
-        }
-
-        public void NotifyStateEntered(PlayerAnimState state)
-        {
-            if (_animState == state)
-            {
-                return; // 같은 상태 중복 발행 방지
-            }
-
-            _animState = state;
-
-            if (_animStateChannel != null) 
-            {
-                _animStateChannel.Raise(state);
-            }
         }
 
         private void SetHorizontalVelocity(float velocityX)
@@ -91,15 +92,36 @@ namespace Game.Player.Anim
 
         private void FlipCharacter(float velocityX)
         {
-            // _flipOjbect의 null 검사는 Awake()에서 이미 수행되었으므로 여기서는 생략
-
-            if (velocityX < 0)
+            if (_flipRoot == null || _facingChannel == null)
             {
-                _flipRoot.localScale = new Vector3(-1, 1, 1);
+                return;
             }
-            else if (velocityX > 0)
+
+            int currentFacing = 0;
+            if (0.01f < velocityX)
             {
-                _flipRoot.localScale = new Vector3(1, 1, 1);
+                currentFacing = 1;
+            }
+            else if (velocityX < -0.01f)
+            {
+                currentFacing = -1;
+            }
+            else
+            {
+                // 현재 이동 속도가 0에 가까우면 캐릭터의 방향을 변경하지 않는다.
+                return;
+            }
+
+            if (currentFacing == _lastFacing)
+            {
+                // 현재 방향과 마지막 방향이 동일하면 캐릭터의 방향을 변경하지 않는다.
+                return;
+            }
+            else
+            {
+                _flipRoot.localScale = new Vector3(currentFacing, 1, 1);
+                _lastFacing = currentFacing;
+                _facingChannel.Raise((int)_flipRoot.localScale.x);
             }
         }
     }

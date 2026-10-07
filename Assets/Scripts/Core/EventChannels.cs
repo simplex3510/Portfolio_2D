@@ -28,6 +28,14 @@ namespace Game.Core.Events
         public void Raise(float value) => OnRaised?.Invoke(value);
     }
 
+    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Int Event Channel", fileName = "New Int Event Channel")]
+    public class IntEventChannelSO : ScriptableObject
+    {
+        public event Action<int> OnRaised;
+
+        public void Raise(int value) => OnRaised?.Invoke(value);
+    }
+
     /// <summary>
     /// bool 값을 전달하는 이벤트 채널(예: 접지 상태, 이동 상태 변화).
     /// </summary>
@@ -39,19 +47,9 @@ namespace Game.Core.Events
         public void Raise(bool value) => OnRaised?.Invoke(value);
     }
 
-    /// <summary>
-    /// PlayerAnimState를 전달하는 이벤트 채널(예: 플레이어 애니메이션 상태 변화).
-    /// </summary>
-    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Event Player Anim State Channel", fileName = "New Event Player Anim State Channel")]
-    public class PlayerAnimStateEventChannelSO : ScriptableObject
-    {
-        public event Action<PlayerAnimState> OnRaised;
-        public void Raise(PlayerAnimState state) => OnRaised?.Invoke(state);
-    }
-
     // 플레이어 공격 상태 변화를 전파하는 이벤트 채널
     // 발행자(PlayerAttackController)는 구독자(SwordAnimatorController, VFX 등)를 직접 알지 못한다
-    [CreateAssetMenu(fileName = "PlayerAttackEventChannel", menuName = "Game/Attack/Attack Event Channel")]
+    [CreateAssetMenu(menuName = "ScriptableObject/EventsChannels/Player Attack Event Channel", fileName = "New Player Attack Event Channel")]
     public class PlayerAttackEventChannelSO : ScriptableObject
     {
         // 공격 확정 시점 (Tap: 즉시 / Hold: HoldDetectionThreshold 도달 시, Windup 시작)
@@ -61,14 +59,14 @@ namespace Game.Core.Events
         public event Action<AttackDataSO> Executed;
 
         // 공격 정상 종료
-        public event Action<AttackDataSO> Ended;
+        public event Action Ended;
 
         // Hold 공격이 Windup 중 release되어 취소됨
         public event Action<AttackDataSO> Canceled;
 
         public void RaiseStarted(AttackDataSO data) => Started?.Invoke(data);
         public void RaiseExecuted(AttackDataSO data) => Executed?.Invoke(data);
-        public void RaiseEnded(AttackDataSO data) => Ended?.Invoke(data);
         public void RaiseCanceled(AttackDataSO data) => Canceled?.Invoke(data);
+        public void RaiseEnded() => Ended?.Invoke();
     }
 }
