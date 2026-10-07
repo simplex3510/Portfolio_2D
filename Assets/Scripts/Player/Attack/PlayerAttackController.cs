@@ -1,6 +1,5 @@
 using UnityEngine;
 
-using Game.Core.Events;
 using Game.Input.Attack;
 
 namespace Game.Player.Attack
@@ -11,8 +10,6 @@ namespace Game.Player.Attack
         // [Header("References")]
 
         private PlayerAttackInputReader _attackInputReader;
-
-        private Animator _animator;
 
         private void Awake()
         {
