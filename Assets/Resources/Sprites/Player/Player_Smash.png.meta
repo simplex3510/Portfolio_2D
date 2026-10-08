@@ -1,0 +1,561 @@
+fileFormatVersion: 2
+guid: 1452bb1ae3e696f48a2345e513c424fe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -666224252075318285
+    second: Player_Smash_0
+  - first:
+      213: -1571686966973063267
+    second: Player_Smash_1
+  - first:
+      213: -2555693690107812278
+    second: Player_Smash_2
+  - first:
+      213: -2322622589366674931
+    second: Player_Smash_3
+  - first:
+      213: 3051749561080307008
+    second: Player_Smash_4
+  - first:
+      213: 5491538032660030758
+    second: Player_Smash_5
+  - first:
+      213: 8891246975953590154
+    second: Player_Smash_6
+  - first:
+      213: -9191031440008760583
+    second: Player_Smash_7
+  - first:
+      213: -6166121669958666962
+    second: Player_Smash_8
+  - first:
+      213: -7817216685747239690
+    second: Player_Smash_9
+  - first:
+      213: 6167107295124501746
+    second: Player_Smash_10
+  - first:
+      213: 5001908673763838664
+    second: Player_Smash_11
+  - first:
+      213: -4366233584497434716
+    second: Player_Smash_12
+  - first:
+      213: 5884548077969797936
+    second: Player_Smash_13
+  - first:
+      213: -5791074150384656352
+    second: Player_Smash_14
+  - first:
+      213: 7134944898577168163
+    second: Player_Smash_15
+  - first:
+      213: 4039538959231494199
+    second: Player_Smash_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_Smash_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 62
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f3ec42929811c6f0800000000000000
+      internalID: -666224252075318285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_1
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 62
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d9f957bd70f303ae0800000000000000
+      internalID: -1571686966973063267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_2
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 62
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a46aa66212a588cd0800000000000000
+      internalID: -2555693690107812278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_3
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 62
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0a508d8f0364cfd0800000000000000
+      internalID: -2322622589366674931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_4
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 62
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04d55a39e0ef95a20800000000000000
+      internalID: 3051749561080307008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_5
+      rect:
+        serializedVersion: 2
+        x: 783
+        y: 62
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 625af3bcebcd53c40800000000000000
+      internalID: 5491538032660030758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_6
+      rect:
+        serializedVersion: 2
+        x: 927
+        y: 62
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a87dafb440e046b70800000000000000
+      internalID: 8891246975953590154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_7
+      rect:
+        serializedVersion: 2
+        x: 1073
+        y: 62
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f2b4daf995e27080800000000000000
+      internalID: -9191031440008760583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_8
+      rect:
+        serializedVersion: 2
+        x: 1217
+        y: 62
+        width: 14
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e25764cb2098d6aa0800000000000000
+      internalID: -6166121669958666962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_9
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 62
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f487c977daa38390800000000000000
+      internalID: -7817216685747239690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_10
+      rect:
+        serializedVersion: 2
+        x: 1504
+        y: 62
+        width: 15
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f4bd910967f59550800000000000000
+      internalID: 6167107295124501746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_11
+      rect:
+        serializedVersion: 2
+        x: 1644
+        y: 62
+        width: 25
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ca83a200795a6540800000000000000
+      internalID: 5001908673763838664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_12
+      rect:
+        serializedVersion: 2
+        x: 1789
+        y: 62
+        width: 25
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4af56ad20b50863c0800000000000000
+      internalID: -4366233584497434716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_13
+      rect:
+        serializedVersion: 2
+        x: 1933
+        y: 62
+        width: 24
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 033f81b9c4d1aa150800000000000000
+      internalID: 5884548077969797936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_14
+      rect:
+        serializedVersion: 2
+        x: 2078
+        y: 62
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 020206e1eb8f1afa0800000000000000
+      internalID: -5791074150384656352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_15
+      rect:
+        serializedVersion: 2
+        x: 2223
+        y: 62
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3277dab259a640360800000000000000
+      internalID: 7134944898577168163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Smash_16
+      rect:
+        serializedVersion: 2
+        x: 2368
+        y: 62
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7382851f7435f0830800000000000000
+      internalID: 4039538959231494199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_Smash_0: -666224252075318285
+      Player_Smash_1: -1571686966973063267
+      Player_Smash_10: 6167107295124501746
+      Player_Smash_11: 5001908673763838664
+      Player_Smash_12: -4366233584497434716
+      Player_Smash_13: 5884548077969797936
+      Player_Smash_14: -5791074150384656352
+      Player_Smash_15: 7134944898577168163
+      Player_Smash_16: 4039538959231494199
+      Player_Smash_2: -2555693690107812278
+      Player_Smash_3: -2322622589366674931
+      Player_Smash_4: 3051749561080307008
+      Player_Smash_5: 5491538032660030758
+      Player_Smash_6: 8891246975953590154
+      Player_Smash_7: -9191031440008760583
+      Player_Smash_8: -6166121669958666962
+      Player_Smash_9: -7817216685747239690
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
