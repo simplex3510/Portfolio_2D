@@ -1,0 +1,18 @@
+{
+    "name": "RuneBlade.Presentation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8a867fa8b15798b48b875eb7bfa01cf0",
+        "GUID:e8c416bc6746f334fb6976d5cdb36e31",
+        "GUID:3891bca43190db649950e04003e7be3b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
