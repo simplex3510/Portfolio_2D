@@ -713,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 566bdd5210eb98b479d31f4b8607c5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: RuneBlade.Input::RuneBlade.Input.RawKeySamplerTester
-  _ticksPerSecond: 60
+  _ticksPerSecond: 10
 --- !u!1 &2059449855
 GameObject:
   m_ObjectHideFlags: 0
