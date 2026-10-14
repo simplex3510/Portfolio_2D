@@ -3,16 +3,16 @@ using NUnit.Framework;
 
 namespace RuneBlade.Simulation.Tests
 {
-    public class DoubleTapRecordTests
+    public class DoubleTapTrackerTests
     {
         // 테스트용 창 길이. 실제 수치는 [잠정]이며 프로토타입 후 확정된다.
         private const int Window = 3;
 
-        private static void Advance(ref DoubleTapRecord record, int ticks)
+        private static void CountDown(ref DoubleTapTracker record, int ticks)
         {
             for (int i = 0; i < ticks; i++)
             {
-                record.AdvanceTick();
+                record.CountDownTick();
             }
         }
 
@@ -21,10 +21,10 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void SameKeyWithinWindow_IsRecognized_AndClearsRecord()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             Assert.IsFalse(record.RegisterPress(LogicalKey.Right, Window));
-            Advance(ref record, 2);
+            CountDown(ref record, 2);
             Assert.IsTrue(record.RegisterPress(LogicalKey.Right, Window));
 
             Assert.IsFalse(record.IsActive); // 인식되면 이력 초기화
@@ -34,7 +34,7 @@ namespace RuneBlade.Simulation.Tests
         public void SameTick_PressTwice_IsRecognized()
         {
             // 간격 0틱: 같은 틱의 [Press, Release, Press]에서 두 번째 Press
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             record.RegisterPress(LogicalKey.Left, Window);
 
@@ -44,10 +44,10 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void Boundary_PressAtWindowTicks_IsRecognized()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             record.RegisterPress(LogicalKey.Right, Window);
-            Advance(ref record, Window); // 간격 d = Window
+            CountDown(ref record, Window); // 간격 d = Window
 
             Assert.IsTrue(record.RegisterPress(LogicalKey.Right, Window));
         }
@@ -55,10 +55,10 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void Boundary_PressAfterWindow_IsNotRecognized_AndBecomesNewFirstPress()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             record.RegisterPress(LogicalKey.Right, Window);
-            Advance(ref record, Window + 1); // 간격 d = Window + 1 → 만료
+            CountDown(ref record, Window + 1); // 간격 d = Window + 1 → 만료
 
             Assert.IsFalse(record.IsActive);
             Assert.IsFalse(record.RegisterPress(LogicalKey.Right, Window));
@@ -69,7 +69,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void DownDown_IsRecognized()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             record.RegisterPress(LogicalKey.Down, Window);
 
@@ -81,7 +81,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void LeftRightLeft_IsNotRecognized()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             Assert.IsFalse(record.RegisterPress(LogicalKey.Left, Window));
             Assert.IsFalse(record.RegisterPress(LogicalKey.Right, Window)); // 첫 Press가 →로 교체됨
@@ -93,7 +93,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void UpBetween_InvalidatesFirstPress()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             record.RegisterPress(LogicalKey.Right, Window);
             record.RegisterPress(LogicalKey.Up, Window);
@@ -106,7 +106,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void UpUp_IsNeverRecognized_ButReplacesRecord()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             Assert.IsFalse(record.RegisterPress(LogicalKey.Up, Window));
             Assert.IsFalse(record.RegisterPress(LogicalKey.Up, Window));
@@ -120,7 +120,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void AfterRecognition_ThirdPressStartsNewRecord()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
             record.RegisterPress(LogicalKey.Right, Window);
             record.RegisterPress(LogicalKey.Right, Window); // 인식, 초기화
 
@@ -132,13 +132,13 @@ namespace RuneBlade.Simulation.Tests
         // ---- 시간 동결 ----
 
         [Test]
-        public void WithoutAdvanceTick_WindowStaysFrozen()
+        public void WithoutCountDownTick_WindowStaysFrozen()
         {
-            // 히트스톱 중에는 호출하는 쪽이 AdvanceTick을 부르지 않는다
-            var record = new DoubleTapRecord();
+            // 시간이 멈추는 구간에서는 호출하는 쪽이 CountDownTick을 부르지 않는다
+            var record = new DoubleTapTracker();
             record.RegisterPress(LogicalKey.Right, Window);
 
-            // (정지 구간: AdvanceTick 호출 없음)
+            // (정지 구간: CountDownTick 호출 없음)
 
             Assert.That(record.RemainingTicks, Is.EqualTo(Window));
             Assert.IsTrue(record.RegisterPress(LogicalKey.Right, Window));
@@ -149,9 +149,9 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void SlotKey_DoesNotAffectRecord()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
             record.RegisterPress(LogicalKey.Right, Window);
-            DoubleTapRecord before = record;
+            DoubleTapTracker before = record;
 
             bool recognized = record.RegisterPress(LogicalKey.Slot1, Window);
 
@@ -162,21 +162,21 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void Clear_ResetsToDefault()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
             record.RegisterPress(LogicalKey.Left, Window);
 
             record.Clear();
 
-            Assert.That(record, Is.EqualTo(new DoubleTapRecord()));
+            Assert.That(record, Is.EqualTo(new DoubleTapTracker()));
         }
 
         [Test]
         public void WindowOutOfRange_Throws()
         {
-            var record = new DoubleTapRecord();
+            var record = new DoubleTapTracker();
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                () => record.RegisterPress(LogicalKey.Right, DoubleTapRecord.MaxWindowTicks + 1));
+                () => record.RegisterPress(LogicalKey.Right, DoubleTapTracker.MaxWindowTicks + 1));
             Assert.Throws<ArgumentOutOfRangeException>(
                 () => record.RegisterPress(LogicalKey.Right, -1));
         }

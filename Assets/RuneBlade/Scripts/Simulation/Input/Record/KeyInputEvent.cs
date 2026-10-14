@@ -44,8 +44,8 @@ namespace RuneBlade.Simulation
         {
             PackedEvent = packedEvent;
         }
-    
-        /// <summary>포장된 바이트에서 InputKeyEvent를 생성한다.</summary>
+
+        /// <summary>포장된 바이트에서 KeyInputEvent를 생성한다.</summary>
         public static KeyInputEvent CreateFromPacked(byte packedEvent)
         {
             return new KeyInputEvent(packedEvent);
