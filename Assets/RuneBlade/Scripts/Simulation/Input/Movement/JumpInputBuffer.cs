@@ -13,7 +13,7 @@ namespace RuneBlade.Simulation
     /// </summary>
     public struct JumpInputBuffer : IEquatable<JumpInputBuffer>
     {
-        // 유지 시간은 byte에 담기는 범위까지만 허용한다. 실제 값은 MovementInputTuning.JumpBufferTicks이다.
+        // 유지 시간은 byte에 담기는 범위까지만 허용한다. 실제 값은 MovementSettings.JumpBufferTicks이다.
         public const int MaxBufferTicks = byte.MaxValue;
 
         private bool _isStored;
