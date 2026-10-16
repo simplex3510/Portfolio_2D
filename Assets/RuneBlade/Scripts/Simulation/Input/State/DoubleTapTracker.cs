@@ -11,10 +11,10 @@ namespace RuneBlade.Simulation
     ///
     /// 창은 틱 번호 차이가 아니라 "남은 틱 카운트다운"으로 센다. 시간이 멈추는 구간에서는 호출하는 쪽이
     /// CountDownTick을 부르지 않는 것만으로 창이 동결된다.
-    /// Clear로 초기화한다. 스냅샷·해시에 포함된다.
+    /// Clear로 초기화한다. 스냅샷에 포함된다.
     /// TODO: 초기화·동결이 필요한 구간(라운드 경계, 히트스톱 등)은 기획 재작성 후 확정한다.
     /// </summary>
-    public struct DoubleTapTracker : IEquatable<DoubleTapTracker>
+    public struct DoubleTapTracker
     {
         // 창 길이는 byte에 담기는 범위까지만 허용한다. 실제 값은 [잠정] 수치이며 호출하는 쪽이 넘긴다.
         public const int MaxWindowTicks = byte.MaxValue;
@@ -91,21 +91,6 @@ namespace RuneBlade.Simulation
         {
             this = default;
         }
-
-        public readonly bool Equals(DoubleTapTracker other)
-        {
-            return _isActive == other._isActive
-                && _key == other._key
-                && _remainingTicks == other._remainingTicks;
-        }
-
-        public override readonly bool Equals(object obj) => obj is DoubleTapTracker other && Equals(other);
-
-        public override readonly int GetHashCode() => HashCode.Combine(_isActive, (byte)_key, _remainingTicks);
-
-        public static bool operator ==(DoubleTapTracker left, DoubleTapTracker right) => left.Equals(right);
-
-        public static bool operator !=(DoubleTapTracker left, DoubleTapTracker right) => !left.Equals(right);
 
         public override readonly string ToString()
         {

@@ -1,5 +1,3 @@
-using System;
-
 namespace RuneBlade.Simulation
 {
     /// <summary>키 전이의 종류. 값이 곧 기록 형식이므로 번호를 바꾸면 안 된다.</summary>
@@ -19,7 +17,7 @@ namespace RuneBlade.Simulation
     /// 이름에 Key를 넣은 이유: Input 어셈블리에서 UnityEngine.InputSystem의 InputEvent와
     /// 이름이 겹쳐 using 충돌이 나는 것을 피하기 위해서이다.
     /// </summary>
-    public readonly struct KeyInputEvent : IEquatable<KeyInputEvent>
+    public readonly struct KeyInputEvent
     {
         private const int KeyMask = 0b_0000_1111;           // 하위 4비트: 논리 키값
         private const int KeyTransitionBit = 0b_0001_0000;  // 5번째 비트: 키 트렌지션 종류
@@ -67,16 +65,6 @@ namespace RuneBlade.Simulation
         /// </summary>
         public bool IsValid =>
             (PackedEvent & ReservedMask) == 0 && LogicalKeyUtility.IsValid(Key);
-
-        public bool Equals(KeyInputEvent other) => PackedEvent == other.PackedEvent;
-
-        public override bool Equals(object obj) => obj is KeyInputEvent other && Equals(other);
-
-        public override int GetHashCode() => PackedEvent;
-
-        public static bool operator ==(KeyInputEvent left, KeyInputEvent right) => left.Equals(right);
-
-        public static bool operator !=(KeyInputEvent left, KeyInputEvent right) => !left.Equals(right);
 
         public override string ToString() => $"({Key}, {Transition})";
     }

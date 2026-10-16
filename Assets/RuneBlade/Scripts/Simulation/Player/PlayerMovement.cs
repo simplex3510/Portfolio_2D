@@ -1,27 +1,25 @@
-using System;
-
 namespace RuneBlade.Simulation
 {
     /// <summary>
     /// 플레이어 한 명의 이동 상태와 규칙. 위치·속도·지상/대시 상태와 이동 입력 이력을 함께 소유하고,
-    /// 한 틱 입력(TickInput)을 받아 스스로 갱신한다. 스냅샷·해시에 포함된다.
+    /// 한 틱 입력(TickInput)을 받아 스스로 갱신한다. 서버 스냅샷·클라이언트 보정의 대상이 되는 상태이다.
     ///
     /// 조정 수치(MovementSettings)는 매치 시작 시 고정된 값을 밖에서 넘겨받는다(D-008).
-    /// 좌표계는 월드 유닛 FixedPoint이며 +X가 오른쪽, +Y가 위쪽이다.
+    /// 좌표계는 월드 유닛 float이며 +X가 오른쪽, +Y가 위쪽이다(D-012).
     ///
     /// TODO: 공격 상태가 생기면 대시 허용(접점 1)과 이동 잠금(접점 3)을 공격 도메인에서 받는다.
     ///       지금은 공격이 없으므로 대시는 항상 허용되고 이동은 잠기지 않는다.
     /// TODO: 바닥은 Y=0 하나뿐이다. 플랫폼과 하강(↓↓)은 플랫폼 정보가 생기면 구현한다.
     /// TODO: 바라보는 방향(Facing)은 공격·렌더가 필요해질 때 추가한다.
     /// </summary>
-    public struct PlayerMovement : IEquatable<PlayerMovement>
+    public struct PlayerMovement
     {
         // 임시 바닥 높이. 플랫폼 정보가 생기면 대체된다.
-        private static readonly FixedPoint GroundY = FixedPoint.Zero;
+        private const float GroundY = 0f;
 
-        private FixedPoint _positionX;
-        private FixedPoint _positionY;
-        private FixedPoint _velocityY;
+        private float _positionX;
+        private float _positionY;
+        private float _velocityY;
 
         private bool _isGrounded;
         private bool _hasUsedDoubleJump; // 공중에서 이단 점프를 이미 썼는지(착지하면 초기화)
@@ -35,11 +33,11 @@ namespace RuneBlade.Simulation
         private DoubleTapTracker _doubleTapTracker;
         private JumpInputBuffer _jumpBuffer;
 
-        public readonly FixedPoint PositionX => _positionX;
+        public readonly float PositionX => _positionX;
 
-        public readonly FixedPoint PositionY => _positionY;
+        public readonly float PositionY => _positionY;
 
-        public readonly FixedPoint VelocityY => _velocityY;
+        public readonly float VelocityY => _velocityY;
 
         public readonly bool IsGrounded => _isGrounded;
 
@@ -48,7 +46,7 @@ namespace RuneBlade.Simulation
         public readonly HorizontalDirection DashDirection => _dashDirection;
 
         /// <summary>바닥 위에 선 상태로 시작한다. default는 공중 상태이므로 시작 시에는 이 메서드를 쓴다.</summary>
-        public static PlayerMovement CreateOnGround(FixedPoint startPositionX)
+        public static PlayerMovement CreateOnGround(float startPositionX)
         {
             PlayerMovement movement = default;
             movement._positionX = startPositionX;
@@ -208,7 +206,7 @@ namespace RuneBlade.Simulation
         private void Land(in MovementSettings settings)
         {
             _positionY = GroundY;
-            _velocityY = FixedPoint.Zero;
+            _velocityY = 0f;
             _isGrounded = true;
             _hasUsedDoubleJump = false;
 
@@ -231,44 +229,6 @@ namespace RuneBlade.Simulation
                     return 0;
             }
         }
-
-        public readonly bool Equals(PlayerMovement other)
-        {
-            return _positionX == other._positionX
-                && _positionY == other._positionY
-                && _velocityY == other._velocityY
-                && _isGrounded == other._isGrounded
-                && _hasUsedDoubleJump == other._hasUsedDoubleJump
-                && _dashDirection == other._dashDirection
-                && _dashRemainingTicks == other._dashRemainingTicks
-                && _dashCooldownRemainingTicks == other._dashCooldownRemainingTicks
-                && _inputState == other._inputState
-                && _doubleTapTracker == other._doubleTapTracker
-                && _jumpBuffer == other._jumpBuffer;
-        }
-
-        public override readonly bool Equals(object obj) => obj is PlayerMovement other && Equals(other);
-
-        public override readonly int GetHashCode()
-        {
-            HashCode hash = new HashCode();
-            hash.Add(_positionX);
-            hash.Add(_positionY);
-            hash.Add(_velocityY);
-            hash.Add(_isGrounded);
-            hash.Add(_hasUsedDoubleJump);
-            hash.Add(_dashDirection);
-            hash.Add(_dashRemainingTicks);
-            hash.Add(_dashCooldownRemainingTicks);
-            hash.Add(_inputState);
-            hash.Add(_doubleTapTracker);
-            hash.Add(_jumpBuffer);
-            return hash.ToHashCode();
-        }
-
-        public static bool operator ==(PlayerMovement left, PlayerMovement right) => left.Equals(right);
-
-        public static bool operator !=(PlayerMovement left, PlayerMovement right) => !left.Equals(right);
 
         public override readonly string ToString()
         {

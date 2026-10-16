@@ -1,10 +1,11 @@
 {
-    "name": "RuneBlade.Simulation.Tests",
+    "name": "RuneBlade.Tests",
     "rootNamespace": "",
     "references": [
         "GUID:27619889b8ba8c24980f49ee34dbb44a",
         "GUID:0acc523941302664db1f4e527237feb3",
-        "GUID:0f1f3150d87edb449bde678e79bad640"
+        "GUID:0f1f3150d87edb449bde678e79bad640",
+        "GUID:9229b47ee78276d48b612cb6e94ef2cd"
     ],
     "includePlatforms": [
         "Editor"

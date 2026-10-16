@@ -1,10 +1,8 @@
-using System;
-
 namespace RuneBlade.Simulation
 {
     /// <summary>
     /// 좌우 방향의 현재 우선 방향. "나중에 누른 쪽 우선" 규칙의 결과값이다.
-    /// 값은 스냅샷·해시에 들어가므로 번호를 바꾸면 안 된다.
+    /// 값은 스냅샷 직렬화에 들어가므로 번호를 바꾸면 안 된다.
     /// </summary>
     public enum HorizontalDirection : byte
     {
@@ -15,14 +13,14 @@ namespace RuneBlade.Simulation
 
     /// <summary>
     /// 한 플레이어의 키 눌림 상태와 좌우 우선 방향. 둘 다 TickInput이 아니라
-    /// 시뮬레이션이 이벤트를 처리하며 보유하는 파생 상태이며, 스냅샷·해시에 포함된다.
+    /// 시뮬레이션이 이벤트를 처리하며 보유하는 파생 상태이며, 스냅샷에 포함된다.
     ///
     /// 매치 시작 시에는 default(전부 해제)에서 출발한다.
     /// 이 구조체는 이벤트가 오면 항상 갱신한다. 막는 것은 갱신이 아니라 그 이벤트가 일으킬 동작이며,
     /// 그 판정은 이 구조체의 일이 아니다.
     /// TODO: 라운드 경계와 정지·경직·사망·연출 구간에서의 처리는 기획 재작성 후 확정한다.
     /// </summary>
-    public struct InputState : IEquatable<InputState>
+    public struct InputState
     {
         // 논리키 11종의 눌림 비트. 비트 번호 = (int)LogicalKey.
         private ushort _heldKeyMask;
@@ -30,7 +28,7 @@ namespace RuneBlade.Simulation
         // 좌우 우선 방향. 항상 "현재 눌려 있는 쪽"을 가리키도록 유지한다(아래 Apply 참조).
         private HorizontalDirection _horizontal;
 
-        /// <summary>눌림 마스크 원본. 해시·스냅샷용.</summary>
+        /// <summary>눌림 마스크 원본. 스냅샷용.</summary>
         public readonly ushort HeldKeyMask => _heldKeyMask;
 
         /// <summary>
@@ -121,19 +119,6 @@ namespace RuneBlade.Simulation
                 return true;
             }
         }
-
-        public readonly bool Equals(InputState other)
-        {
-            return _heldKeyMask == other._heldKeyMask && _horizontal == other._horizontal;
-        }
-
-        public override readonly bool Equals(object obj) => obj is InputState other && Equals(other);
-
-        public override readonly int GetHashCode() => HashCode.Combine(_heldKeyMask, (byte)_horizontal);
-
-        public static bool operator ==(InputState left, InputState right) => left.Equals(right);
-
-        public static bool operator !=(InputState left, InputState right) => !left.Equals(right);
 
         public override readonly string ToString() => $"Held=0x{_heldKeyMask:X3}, Horizontal={_horizontal}";
     }

@@ -5,16 +5,15 @@ namespace RuneBlade.Simulation
 {
     /// <summary>
     /// 한 틱 구간에서 한 플레이어에게 일어난 키 전이 이벤트 목록(도착 순서 그대로).
-    /// 시뮬레이션이 받는 입력의 전부이며, 결정성의 경계선이다.
-    /// 이 값이 같으면 시뮬레이션 결과도 같아야 한다.
+    /// 시뮬레이션이 받는 입력의 전부이며, 서버로 보내는 입력의 단위이다.
     ///
     /// 저장 방식: ulong 1개에 이벤트 바이트를 순서대로 채운다(0번 이벤트가 최하위 바이트).
-    /// 배열·힙 할당이 없고, 값 비교·해시·직렬화가 단순해진다.
+    /// 배열·힙 할당이 없고, 직렬화가 단순해진다.
     ///
     /// 담는 것은 키 전이의 순수 정보뿐이다. 눌림 상태·우선 방향 같은 파생값은
     /// 담지 않으며 시뮬레이션이 이벤트를 처리하며 보유한다.
     /// </summary>
-    public struct TickInput : IEquatable<TickInput>
+    public struct TickInput
     {
         /// <summary>
         /// 한 틱에 담을 수 있는 이벤트 수 [잠정]. 현재 저장 방식(ulong 1개)에서는 8이 구조적 상한이다.
@@ -26,7 +25,7 @@ namespace RuneBlade.Simulation
         private const int BitsPerEvent = 8;
 
         // 이벤트 바이트들. 0번 이벤트 = 하위 8비트. 사용하지 않는 칸은 항상 0으로 유지한다
-        // (같은 입력이면 같은 비트 패턴이 되어야 비교·해시가 안전하다).
+        // (같은 입력이면 같은 비트 패턴이 되어야 직렬화·검증이 단순하다).
         private ulong _events;
         private byte _eventCount;
 
@@ -109,19 +108,6 @@ namespace RuneBlade.Simulation
             result = candidate;
             return true;
         }
-
-        public readonly bool Equals(TickInput other)
-        {
-            return _events == other._events && _eventCount == other._eventCount;
-        }
-
-        public override readonly bool Equals(object obj) => obj is TickInput other && Equals(other);
-
-        public override readonly int GetHashCode() => HashCode.Combine(_events, _eventCount);
-
-        public static bool operator ==(TickInput left, TickInput right) => left.Equals(right);
-
-        public static bool operator !=(TickInput left, TickInput right) => !left.Equals(right);
 
         /// <summary>디버그·테스트 로그용. 예: [Press Left, Press Right]</summary>
         public override readonly string ToString()

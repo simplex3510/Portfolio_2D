@@ -16,11 +16,13 @@ namespace RuneBlade.Game
         private const float TickDurationSeconds = 1f / 60f;
         private const int MaxTicksPerFrame = 5;
 
+        [Header("Movement Settings")]
         [SerializeField] private PlayerMovementSettingSO _movementSettingSO;
 
         // _actions의 순서와 같다.
         private static readonly LogicalKey[] ActionKeys = { LogicalKey.Left, LogicalKey.Right, LogicalKey.Up, LogicalKey.Down };
 
+        [Header("Input Actions")]
         [SerializeField] private InputActionReference _leftActionReference;
         [SerializeField] private InputActionReference _rightActionReference;
         [SerializeField] private InputActionReference _upActionReference;
@@ -86,9 +88,9 @@ namespace RuneBlade.Game
                 return;
             }
 
-            // 매치 중 값이 바뀌면 결정성이 깨지므로 시작 시 복사해서 고정한다.
+            // 매치 중 값이 바뀌면 예측과 서버 결과가 어긋나므로 시작 시 복사해서 고정한다.
             _settings = _movementSettingSO.Settings;
-            _movement = PlayerMovement.CreateOnGround(FixedPoint.Zero);
+            _movement = PlayerMovement.CreateOnGround(0f);
             ApplyToTransform();
         }
 
@@ -126,13 +128,7 @@ namespace RuneBlade.Game
 
         private void ApplyToTransform()
         {
-            transform.position = new Vector3(ToFloat(_movement.PositionX), ToFloat(_movement.PositionY), transform.position.z);
-        }
-
-        // 렌더링 전용 변환. 시뮬레이션 안에서는 쓰지 않는다.
-        private static float ToFloat(FixedPoint value)
-        {
-            return value.RawValue / (float)FixedPoint.OneRawValue;
+            transform.position = new Vector3(_movement.PositionX, _movement.PositionY, transform.position.z);
         }
 
         // 콜백은 입력 시스템이 발생 순서대로 호출하므로 같은 프레임 안의 순서가 보존된다.

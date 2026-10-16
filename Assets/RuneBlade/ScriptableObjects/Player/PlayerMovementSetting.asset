@@ -15,9 +15,9 @@ MonoBehaviour:
   _settings:
     JumpBufferTicks: 6
     DoubleTapWindowTicks: 15
-    MoveSpeed: 6000
-    JumpVelocity: 12000
-    Gravity: 30000
-    DashSpeed: 14000
+    MoveSpeed: 6
+    JumpVelocity: 12
+    Gravity: 30
+    DashSpeed: 14
     DashDurationTicks: 12
     DashCooldownTicks: 30

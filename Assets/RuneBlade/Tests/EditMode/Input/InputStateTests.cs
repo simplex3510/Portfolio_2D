@@ -63,7 +63,7 @@ namespace RuneBlade.Simulation.Tests
         [Test]
         public void SameTick_OrderIsPartOfTheRecord()
         {
-            // 순서만 다른 두 입력은 서로 다른 값이어야 한다(리플레이·해시가 순서를 구분하는 근거).
+            // 순서만 다른 두 입력은 서로 다른 값이어야 한다(도착 순서가 기록에 보존되는 근거).
             TickInput leftFirst = Tick(Press(LogicalKey.Left), Press(LogicalKey.Right));
             TickInput rightFirst = Tick(Press(LogicalKey.Right), Press(LogicalKey.Left));
 

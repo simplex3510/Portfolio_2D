@@ -8,10 +8,10 @@ namespace RuneBlade.Simulation
     ///
     /// 유지 시간은 DoubleTapTracker와 같은 방식의 "남은 틱 카운트다운"이다.
     /// 시간이 멈추는 구간에서는 호출하는 쪽이 CountDownTick을 부르지 않는 것만으로 동결된다.
-    /// 슬롯 입력 버퍼와는 별개이다. 스냅샷·해시에 포함된다.
+    /// 슬롯 입력 버퍼와는 별개이다. 스냅샷에 포함된다.
     /// TODO: 초기화·동결이 필요한 구간(라운드 경계, 히트스톱 등)은 기획 재작성 후 확정한다.
     /// </summary>
-    public struct JumpInputBuffer : IEquatable<JumpInputBuffer>
+    public struct JumpInputBuffer
     {
         // 유지 시간은 byte에 담기는 범위까지만 허용한다. 실제 값은 MovementSettings.JumpBufferTicks이다.
         public const int MaxBufferTicks = byte.MaxValue;
@@ -75,19 +75,6 @@ namespace RuneBlade.Simulation
         {
             this = default;
         }
-
-        public readonly bool Equals(JumpInputBuffer other)
-        {
-            return _isStored == other._isStored && _remainingTicks == other._remainingTicks;
-        }
-
-        public override readonly bool Equals(object obj) => obj is JumpInputBuffer other && Equals(other);
-
-        public override readonly int GetHashCode() => HashCode.Combine(_isStored, _remainingTicks);
-
-        public static bool operator ==(JumpInputBuffer left, JumpInputBuffer right) => left.Equals(right);
-
-        public static bool operator !=(JumpInputBuffer left, JumpInputBuffer right) => !left.Equals(right);
 
         public override readonly string ToString()
         {

@@ -1,0 +1,16 @@
+{
+    "name": "RuneBlade.Network",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0f1f3150d87edb449bde678e79bad640"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}
