@@ -1,0 +1,17 @@
+{
+    "name": "RuneBlade.Client",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0f1f3150d87edb449bde678e79bad640",
+        "GUID:9229b47ee78276d48b612cb6e94ef2cd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

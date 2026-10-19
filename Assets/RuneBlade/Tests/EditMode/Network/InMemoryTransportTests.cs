@@ -92,7 +92,7 @@ namespace RuneBlade.Network.Tests
             var transport = new InMemoryTransport(2);
             IClientTransport clientA = transport.CreateClient();
             IClientTransport clientB = transport.CreateClient();
-            PlayerMovement state = PlayerMovement.CreateOnGround(1.5f);
+            MovementSimulation state = MovementSimulation.CreateOnGround(1.5f);
 
             transport.Server.Send(0, new SnapshotMessage(7, state));
 

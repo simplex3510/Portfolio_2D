@@ -13,9 +13,9 @@ namespace RuneBlade.Network
     public readonly struct SnapshotMessage
     {
         public readonly int LastProcessedInputTick;
-        public readonly PlayerMovement State;
+        public readonly MovementSimulation State;
 
-        public SnapshotMessage(int lastProcessedInputTick, PlayerMovement state)
+        public SnapshotMessage(int lastProcessedInputTick, MovementSimulation state)
         {
             LastProcessedInputTick = lastProcessedInputTick;
             State = state;

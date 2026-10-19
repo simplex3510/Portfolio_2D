@@ -12,7 +12,7 @@ namespace RuneBlade.Simulation
     /// TODO: 바닥은 Y=0 하나뿐이다. 플랫폼과 하강(↓↓)은 플랫폼 정보가 생기면 구현한다.
     /// TODO: 바라보는 방향(Facing)은 공격·렌더가 필요해질 때 추가한다.
     /// </summary>
-    public struct PlayerMovement
+    public struct MovementSimulation
     {
         // 임시 바닥 높이. 플랫폼 정보가 생기면 대체된다.
         private const float GroundY = 0f;
@@ -46,9 +46,9 @@ namespace RuneBlade.Simulation
         public readonly HorizontalDirection DashDirection => _dashDirection;
 
         /// <summary>바닥 위에 선 상태로 시작한다. default는 공중 상태이므로 시작 시에는 이 메서드를 쓴다.</summary>
-        public static PlayerMovement CreateOnGround(float startPositionX)
+        public static MovementSimulation CreateOnGround(float startPositionX)
         {
-            PlayerMovement movement = default;
+            MovementSimulation movement = default;
             movement._positionX = startPositionX;
             movement._positionY = GroundY;
             movement._isGrounded = true;

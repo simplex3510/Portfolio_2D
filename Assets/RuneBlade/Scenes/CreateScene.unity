@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 780615869}
   - component: {fileID: 780615871}
   - component: {fileID: 780615870}
+  - component: {fileID: 780615872}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -576,10 +577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: RuneBlade.Game::RuneBlade.Game.PlayerMovementController
   _movementSettingSO: {fileID: 11400000, guid: 9af0dadb6cf3a3044b65501eb1302c9d, type: 2}
-  _leftActionReference: {fileID: -5691485719112672128, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
-  _rightActionReference: {fileID: -7819005865459027732, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
-  _upActionReference: {fileID: 8645800738633068067, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
-  _downActionReference: {fileID: -6014471820839936844, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
 --- !u!212 &780615871
 SpriteRenderer:
   serializedVersion: 3
@@ -640,6 +637,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &780615872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780615868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7246ea0cf724541b652924ab0c7e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: RuneBlade.Game::RuneBlade.Game.PlayerInputReader
+  _leftActionReference: {fileID: -5691485719112672128, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
+  _rightActionReference: {fileID: -7819005865459027732, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
+  _upActionReference: {fileID: 8645800738633068067, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
+  _downActionReference: {fileID: -6014471820839936844, guid: 28ebfce9c0ce095409310cf661b2767e, type: 3}
 --- !u!1 &811898155
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,380 @@
+{
+  ".vscode/extensions.json": {
+    "mtime": 1791070119.5449142,
+    "seen": 1792032251.1279173,
+    "ast_hash": "a9819ba4d76ccd81cf1f7b18e06c77d0",
+    "semantic_hash": ""
+  },
+  ".vscode/launch.json": {
+    "mtime": 1791070119.5459123,
+    "seen": 1792032251.1279173,
+    "ast_hash": "b939dea735cf9d32842d6a2c44474427",
+    "semantic_hash": ""
+  },
+  ".vscode/settings.json": {
+    "mtime": 1791070119.5459123,
+    "seen": 1792032251.1279173,
+    "ast_hash": "acf02849040bddbbd9d5b8672deaea38",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Game/Input/PlayerInputActions.cs": {
+    "mtime": 1792029417.1639178,
+    "seen": 1792032251.1279173,
+    "ast_hash": "8656fe767b263d010b66b6bc93e315f5",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Game/Player/PlayerMovementController.cs": {
+    "mtime": 1792398360.2988372,
+    "seen": 1792398364.6357453,
+    "ast_hash": "e3902844e33b3e71ec4865a2ace001fe",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Game/Player/ScriptableObject/PlayerMovementSettingSO.cs": {
+    "mtime": 1792028005.954695,
+    "seen": 1792032251.1279173,
+    "ast_hash": "4a2461410d97e7dc0bca3ef06101d25c",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/Movement/JumpInputBuffer.cs": {
+    "mtime": 1792121055.4566023,
+    "seen": 1792127206.7738423,
+    "ast_hash": "6a81d30f47100c31aa6ccaf5be3d7c41",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/Movement/MovementSettings.cs": {
+    "mtime": 1792120339.9199822,
+    "seen": 1792127206.7738423,
+    "ast_hash": "86e656d421ec17fb184af5e4f002f7b2",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/Record/KeyInputEvent.cs": {
+    "mtime": 1792121060.368022,
+    "seen": 1792127206.7738423,
+    "ast_hash": "004f3ad99ab72bd6fbff3a5a2d550b24",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/Record/LogicalKey.cs": {
+    "mtime": 1791869828.2849245,
+    "seen": 1792032251.1279173,
+    "ast_hash": "aa5b9f638d9914b2a0772349453565bc",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/Record/TickInput.cs": {
+    "mtime": 1792121058.2465127,
+    "seen": 1792127206.7738423,
+    "ast_hash": "2557f3ce2e5f512b6ac1e602cab4bf30",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/State/DoubleTapTracker.cs": {
+    "mtime": 1792121053.3321087,
+    "seen": 1792127206.7738423,
+    "ast_hash": "a944a522e803fe8545a4df134713ff06",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Input/State/InputState.cs": {
+    "mtime": 1792121051.2302556,
+    "seen": 1792127206.7738423,
+    "ast_hash": "96e414ac146a97865c81931ad6797a7e",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Simulation/Player/PlayerMovement.cs": {
+    "mtime": 1792120533.5047796,
+    "seen": 1792127206.7738423,
+    "ast_hash": "3ef9bc519cd7672bd610f7749b3c78b4",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Tests/EditMode/Input/DoubleTapTrackerTests.cs": {
+    "mtime": 1792014516.3352625,
+    "seen": 1792032251.1279173,
+    "ast_hash": "ecb2842c8b74efd28d4904ba4e2fb328",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Tests/EditMode/Input/InputStateTests.cs": {
+    "mtime": 1792121061.0514593,
+    "seen": 1792127206.7738423,
+    "ast_hash": "7821bd6aaeec18046e6caa001485b29d",
+    "semantic_hash": ""
+  },
+  "Assets/Welcome/Welcome2DScript.cs": {
+    "mtime": 1783057764.0,
+    "seen": 1792032251.1279173,
+    "ast_hash": "b16a00a8ebb3958cb63a03b38a865f8d",
+    "semantic_hash": ""
+  },
+  "Packages/manifest.json": {
+    "mtime": 1790595388.2062876,
+    "seen": 1792032251.1279173,
+    "ast_hash": "f35dd4e514acff4cc790828289b4fd47",
+    "semantic_hash": ""
+  },
+  "Packages/packages-lock.json": {
+    "mtime": 1790595388.2102933,
+    "seen": 1792032251.1279173,
+    "ast_hash": "ad61336db5d79a20eb8ca7f6d67ca749",
+    "semantic_hash": ""
+  },
+  "ProjectSettings/Packages/com.unity.learn.iet-framework/Settings.json": {
+    "mtime": 1790417724.9512713,
+    "seen": 1792032251.1279173,
+    "ast_hash": "f4988debef69723381b17eb7606d9421",
+    "semantic_hash": ""
+  },
+  "ProjectSettings/SceneTemplateSettings.json": {
+    "mtime": 1790420913.7565591,
+    "seen": 1792032251.1279173,
+    "ast_hash": "eeb26e313b89cd9334b828428a4847ef",
+    "semantic_hash": ""
+  },
+  "ProjectSettings/ProjectVersion.txt": {
+    "mtime": 1790404236.3161545,
+    "seen": 1792032251.1279173,
+    "ast_hash": "4301f2c19351fd7d1b4b72454b6f5697",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Fall.png": {
+    "mtime": 1790560960.4428613,
+    "seen": 1792032251.1279173,
+    "ast_hash": "4bf2a1a5b5e676a055043c436f1041d6",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Idle.png": {
+    "mtime": 1790560901.734553,
+    "seen": 1792032251.1279173,
+    "ast_hash": "aff7771cb5c5945dd2c8aceeeda93b64",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Jump.png": {
+    "mtime": 1790560951.3146648,
+    "seen": 1792032251.1279173,
+    "ast_hash": "c07fee767178baead903b35c09ec71a7",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Run.png": {
+    "mtime": 1790560939.8673625,
+    "seen": 1792032251.1279173,
+    "ast_hash": "091eeeb20279b249367988c91be46347",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Slash.png": {
+    "mtime": 1790723689.1004283,
+    "seen": 1792032251.1279173,
+    "ast_hash": "f108c34bc410dc23c12e7bf3a449f3b8",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_SlashCombo.png": {
+    "mtime": 1790723699.652043,
+    "seen": 1792032251.1279173,
+    "ast_hash": "08483275037083730e75a734369a4b38",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Smash.png": {
+    "mtime": 1790699374.4605963,
+    "seen": 1792032251.1279173,
+    "ast_hash": "7a20554aa9357e0d796c9c581fbe2bfc",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Spin.png": {
+    "mtime": 1790699441.4672816,
+    "seen": 1792032251.1279173,
+    "ast_hash": "57a6757e9db2459fec07f8d7ab4e5643",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Player/Player_Thrust.png": {
+    "mtime": 1790699397.8461845,
+    "seen": 1792032251.1279173,
+    "ast_hash": "2774acf3140d2599803fc8ef529e6353",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Fall.png": {
+    "mtime": 1790579815.9291875,
+    "seen": 1792032251.1279173,
+    "ast_hash": "f2fb8831a239b90b14e8795c9dd14f6f",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Idle.png": {
+    "mtime": 1790578541.4289627,
+    "seen": 1792032251.1279173,
+    "ast_hash": "c421654f6d7f69da5a425ed078f08544",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Jump.png": {
+    "mtime": 1790579832.2359042,
+    "seen": 1792032251.1279173,
+    "ast_hash": "4601459651151f6c827df97618bc003e",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Pause.png": {
+    "mtime": 1790562837.5947695,
+    "seen": 1792032251.1279173,
+    "ast_hash": "044d041cd0d451ce726408aa74ae9c50",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Run.png": {
+    "mtime": 1790578913.4501579,
+    "seen": 1792032251.1279173,
+    "ast_hash": "b464652d96cb802af0a2975b331239e6",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/Sword_Slash.png": {
+    "mtime": 1790729796.1398373,
+    "seen": 1792032251.1279173,
+    "ast_hash": "4b8c8068904c4d0d288570fe2accc255",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Resources/Sprites/Sword/VFX/Sword_SlashVFX.png": {
+    "mtime": 1790728743.43548,
+    "seen": 1792032251.1279173,
+    "ast_hash": "6c252960be1472be453872262e0c333b",
+    "semantic_hash": ""
+  },
+  "Assets/Welcome/2d-template.png": {
+    "mtime": 1783057764.0,
+    "seen": 1792032251.1279173,
+    "ast_hash": "7b666c9379bdf2be2bff6ed6aff20d8f",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/InMemoryTransport.cs": {
+    "mtime": 1792199882.4970436,
+    "seen": 1792200738.1343775,
+    "ast_hash": "674098102d1c75f3673fcdb2a1c155ff",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/InputMessage.cs": {
+    "mtime": 1792126771.4179173,
+    "seen": 1792127206.7738423,
+    "ast_hash": "7d8cb26c2770700e726a84de0e63ef1a",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/Interface/IClientTransport.cs": {
+    "mtime": 1792123142.6725562,
+    "seen": 1792127206.7738423,
+    "ast_hash": "233692ef57726542d1ac98816dd7004e",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/Interface/IServerTransport.cs": {
+    "mtime": 1792123143.3860757,
+    "seen": 1792127206.7738423,
+    "ast_hash": "dd437cfd75b2972cede37d92db4f5fe2",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/SnapshotMessage.cs": {
+    "mtime": 1792122759.2247908,
+    "seen": 1792127206.7738423,
+    "ast_hash": "c48089cd508daf12378fad3183f88614",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Tests/EditMode/Network/InMemoryTransportTests.cs": {
+    "mtime": 1792126513.0984282,
+    "seen": 1792127206.7738423,
+    "ast_hash": "22f67037edae6d8ebd6612f9b837f673",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Tests/EditMode/Network/InputMessageTests.cs": {
+    "mtime": 1792126771.4183595,
+    "seen": 1792127206.7738423,
+    "ast_hash": "44ab827ccc93049ad413a78e6b00318f",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/NetworkConditions.cs": {
+    "mtime": 1792198234.4932294,
+    "seen": 1792200738.1343775,
+    "ast_hash": "0329ac9cdc09142d9c574192590f2ee6",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Network/UnreliableTransport.cs": {
+    "mtime": 1792200547.452653,
+    "seen": 1792200738.1343775,
+    "ast_hash": "b32d28b4b619943b6e009f18996db506",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Tests/EditMode/Network/UnreliableTransportTests.cs": {
+    "mtime": 1792198290.1426816,
+    "seen": 1792200738.1343775,
+    "ast_hash": "4426ca7580a0d0a71e2900abad9abe13",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/combat/defensive.md": {
+    "mtime": 1792391866.6347134,
+    "seen": 1792396791.5896022,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/combat/offensive.md": {
+    "mtime": 1792391814.2689855,
+    "seen": 1792396791.5896022,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/game-design-overview.md": {
+    "mtime": 1792366903.5300362,
+    "seen": 1792396791.5896022,
+    "ast_hash": "83500bf272c0dc9118fc888df8613dfd",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/input/input-movement.md": {
+    "mtime": 1792396262.9993768,
+    "seen": 1792396791.5896022,
+    "ast_hash": "d25b0120fcda4c997ea47c34f4ad91ba",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/input/input-overview.md": {
+    "mtime": 1792396436.768664,
+    "seen": 1792396791.5896022,
+    "ast_hash": "15420f2902cc8e6d941c1c880c81f9b2",
+    "semantic_hash": ""
+  },
+  ".docs/game-design/input/input-skill.md": {
+    "mtime": 1792396303.6404889,
+    "seen": 1792396791.5896022,
+    "ast_hash": "76bf84b86617669298c4df9dce7c6feb",
+    "semantic_hash": ""
+  },
+  ".docs/implement/client/client-progress.md": {
+    "mtime": 1792366010.68409,
+    "seen": 1792396791.5896022,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": ""
+  },
+  ".docs/implement/client/client.md": {
+    "mtime": 1792365733.9477944,
+    "seen": 1792396791.5896022,
+    "ast_hash": "df356943506c7ec35e9b4032ee71e0f3",
+    "semantic_hash": ""
+  },
+  ".docs/implement/server-authoritative-direction.md": {
+    "mtime": 1792365601.1353471,
+    "seen": 1792396791.5896022,
+    "ast_hash": "1b19a5d3757af2c45abd583423b7ea41",
+    "semantic_hash": ""
+  },
+  ".docs/implement/server/server-progress.md": {
+    "mtime": 1792365989.741678,
+    "seen": 1792396791.5896022,
+    "ast_hash": "2cf3100d763c36e70f4bb8e1bd54ee14",
+    "semantic_hash": ""
+  },
+  ".docs/implement/server/server.md": {
+    "mtime": 1792365779.336504,
+    "seen": 1792396791.5896022,
+    "ast_hash": "9c7c2eea620b8b962f6f7811cdfe2679",
+    "semantic_hash": ""
+  },
+  ".docs/progress/progress-overview.md": {
+    "mtime": 1792396491.5108333,
+    "seen": 1792396791.5896022,
+    "ast_hash": "1cb0778a12defb1ffc239af08c5ade41",
+    "semantic_hash": ""
+  },
+  "Assets/RuneBlade/Scripts/Game/Player/LocalInputCollector.cs": {
+    "mtime": 1792398356.5756986,
+    "seen": 1792398364.6357453,
+    "ast_hash": "8450f5e31592ef7cc82ddb133584f3a7",
+    "semantic_hash": ""
+  },
+  ".docs/implement/decisions/decisions-overview.md": {
+    "mtime": 1792398338.156401,
+    "seen": 1792398364.6357453,
+    "ast_hash": "dd33e0a8390e6b88a04c21b35d9299a9",
+    "semantic_hash": ""
+  }
+}
