@@ -94,6 +94,38 @@ namespace RuneBlade.Client.Tests
             Assert.That(newest.PositionX, Is.EqualTo(5f));
         }
 
+        // ---- 상태 교체 ----
+
+        [Test]
+        public void ReplaceState_ChangesOnlyThatTicksState()
+        {
+            var history = new PredictionHistory(8);
+            history.Record(0, PressOf(LogicalKey.Left), StateAt(1f));
+            history.Record(1, PressOf(LogicalKey.Right), StateAt(2f));
+
+            history.ReplaceState(0, StateAt(9f));
+
+            Assert.IsTrue(history.TryGetState(0, out MovementSimulation replaced));
+            Assert.That(replaced.PositionX, Is.EqualTo(9f));
+            Assert.IsTrue(history.TryGetState(1, out MovementSimulation untouched));
+            Assert.That(untouched.PositionX, Is.EqualTo(2f));
+            Assert.IsTrue(history.TryGetInput(0, out TickInput input));
+            Assert.That(input.RawEvents, Is.EqualTo(PressOf(LogicalKey.Left).RawEvents));
+        }
+
+        [Test]
+        public void ReplaceState_OutsideRecordedRange_Throws()
+        {
+            var history = new PredictionHistory(4);
+            for (int tick = 0; tick < 6; tick++)
+            {
+                history.Record(tick, default, StateAt(tick));
+            }
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => history.ReplaceState(1, StateAt(0f)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => history.ReplaceState(6, StateAt(0f)));
+        }
+
         [Test]
         public void Constructor_WithNonPositiveCapacity_Throws()
         {

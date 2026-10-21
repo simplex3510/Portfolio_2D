@@ -69,6 +69,20 @@ namespace RuneBlade.Client
             _newestTick = tick;
         }
 
+        /// <summary>
+        /// 이미 기록된 틱의 상태만 교체한다(보정 중 재적용한 결과를 다시 쓰는 용도).
+        /// 기록 범위 밖이면 프로그래밍 오류로 보고 예외를 던진다.
+        /// </summary>
+        public void ReplaceState(int tick, in MovementSimulation state)
+        {
+            if (!Contains(tick))
+            {
+                throw new ArgumentOutOfRangeException(nameof(tick), $"기록 범위 밖의 틱입니다: {tick}");
+            }
+
+            _states[SlotOf(tick)] = state;
+        }
+
         /// <summary>해당 틱의 입력을 읽는다. 기록된 적 없거나 이력에서 밀려났으면 false이다.</summary>
         public bool TryGetInput(int tick, out TickInput input)
         {
@@ -98,6 +112,9 @@ namespace RuneBlade.Client
         // 기록된 범위: 최근 Capacity개 틱 중 실제로 기록한 것.
         private bool Contains(int tick)
         {
+            // 1. 기록된 적이 있고,
+            // 2. tick이 기록된 범위 안에 있고,
+            // 3. tick이 용량 내에 존재해야 한다.
             return _hasRecorded
                 && tick >= _firstTick
                 && tick <= _newestTick
